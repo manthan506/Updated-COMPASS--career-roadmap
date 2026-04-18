@@ -1,0 +1,2329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compass — AI Career Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#fff;--surf:rgba(255,255,255,0.22);--surf2:rgba(255,255,255,0.15);--surf3:rgba(255,255,255,0.1);
+  --border:rgba(255,255,255,.25);--bh:rgba(255,255,255,.3);
+  --gold:#fff;--gold-l:rgba(255,255,255,0.9);--gold-d:rgba(255,255,255,0.7);
+  --cream:#fff;--muted:rgba(255,255,255,.75);--muted2:rgba(255,255,255,.55);--muted3:rgba(255,255,255,.25);
+  --green:#a8f5c8;--red:#ffe0e0;--blue:#c0e0ff;
+  --rsm:8px;--rmd:12px;--rlg:16px;--rxl:24px;
+  --grad-start:#FF2A2A;--grad-mid:#FF6B9E;--grad-orange:#FF9500;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#ff9500 0%,#ff2a2a 50%,#ff6b9e 100%);min-height:100vh;color:var(--cream);overflow-x:hidden;cursor:none;}
+body::before{content:'';position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 65% 5%,rgba(255,107,158,0.85) 0%,transparent 45%),radial-gradient(ellipse at 0% 80%,rgba(255,149,0,0.9) 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(255,42,42,0.7) 0%,transparent 55%);pointer-events:none;}
+h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;}
+input,select,textarea{font-family:'DM Sans',sans-serif;}
+::-webkit-scrollbar{width:2px;}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);}
+::selection{background:rgba(255,255,255,.25);}
+a{text-decoration:none;color:inherit;}
+
+/* ── CURSOR ── */
+#cur,#cur-ring{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;transform:translate(-50%,-50%);}
+#cur{width:10px;height:10px;background:#fff;mix-blend-mode:overlay;transition:width .15s,height .15s,opacity .2s;box-shadow:0 0 12px rgba(255,255,255,.8),0 0 24px rgba(255,255,255,.4);}
+#cur-ring{width:36px;height:36px;border:1.5px solid rgba(255,255,255,.5);z-index:9998;transition:width .25s cubic-bezier(.23,1,.32,1),height .25s cubic-bezier(.23,1,.32,1),border-color .25s,background .25s;}
+.cur-hover #cur{width:14px;height:14px;}
+.cur-hover #cur-ring{width:60px;height:60px;border-color:rgba(255,255,255,.9);background:rgba(255,255,255,.07);}
+.cur-click #cur{width:5px;height:5px;}
+.cur-click #cur-ring{width:20px;height:20px;}
+#spotlight{position:fixed;pointer-events:none;z-index:0;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);transform:translate(-50%,-50%);mix-blend-mode:overlay;}
+.trail-dot{position:fixed;pointer-events:none;border-radius:50%;z-index:9997;transform:translate(-50%,-50%);animation:trail-fade .65s ease-out forwards;}
+@keyframes trail-fade{0%{opacity:.75;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,calc(-50% + 18px)) scale(.1);}}
+.click-ripple{position:fixed;pointer-events:none;border-radius:50%;z-index:9996;transform:translate(-50%,-50%);border:1.5px solid rgba(201,169,110,.8);width:0;height:0;animation:ripple-out .55s ease-out forwards;}
+@keyframes ripple-out{0%{width:0;height:0;opacity:.9}100%{width:90px;height:90px;opacity:0;}}
+/* ── GRAIN ── */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:990;opacity:.18;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size:200px;}
+
+/* ── ANIMS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shimmer{0%,100%{opacity:.35}50%{opacity:.9}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,169,110,.5)}70%{box-shadow:0 0 0 12px rgba(201,169,110,0)}100%{box-shadow:0 0 0 0 rgba(201,169,110,0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.a1{animation:fadeUp .75s .05s ease both}
+.a2{animation:fadeUp .75s .15s ease both}
+.a3{animation:fadeUp .75s .25s ease both}
+.a4{animation:fadeUp .75s .35s ease both}
+.a5{animation:fadeUp .75s .45s ease both}
+.a6{animation:fadeUp .75s .55s ease both}
+.fi{animation:fadeIn .5s ease both}
+
+/* ── LAYOUT ── */
+.wrap{max-width:1100px;margin:0 auto;padding:0 32px;}
+.section{padding:110px 0;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;display:flex;align-items:center;
+  background:rgba(255,80,30,.25);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(255,255,255,.15);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1100px;margin:0 auto;padding:0 32px;}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;background:none;border:none;color:var(--cream);}
+.logo-mark{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#ff2a2a;}
+.logo-text{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;letter-spacing:.3px;}
+.nav-links{display:flex;gap:2px;}
+.nav-link{background:none;border:none;color:rgba(255,255,255,.75);font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;padding:7px 14px;border-radius:var(--rsm);transition:color .2s,background .2s;}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,.12);}
+.btn-gold{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.95);color:#ff2a2a;border:none;padding:11px 24px;border-radius:var(--rmd);font-family:'DM Sans',sans-serif;font-weight:700;font-size:13.5px;letter-spacing:.2px;cursor:pointer;transition:background .25s,transform .2s,box-shadow .25s;}
+.btn-gold:hover{background:#fff;transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,0,0,.2);}
+.btn-gold:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);color:#fff;border:1.5px solid rgba(255,255,255,.5);padding:11px 24px;border-radius:var(--rmd);font-family:'DM Sans',sans-serif;font-weight:500;font-size:14px;cursor:pointer;transition:all .25s;backdrop-filter:blur(6px);}
+.btn-outline:hover{background:rgba(255,255,255,.22);border-color:#fff;}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 32px 60px;position:relative;overflow:hidden;}
+.hero-glow{position:absolute;top:-10%;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(255,255,255,.08) 0%,transparent 70%);pointer-events:none;}
+.hero-glow2{position:absolute;bottom:0;left:10%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,.04) 0%,transparent 70%);pointer-events:none;}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);border-radius:20px;padding:6px 16px;font-size:12px;color:#fff;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;margin-bottom:28px;backdrop-filter:blur(8px);}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:#fff;animation:shimmer 2s infinite;}
+.hero-h1{font-size:clamp(52px,8vw,92px);font-weight:500;line-height:1.04;letter-spacing:-2px;margin-bottom:24px;max-width:820px;}
+.hero-sub{font-size:clamp(15px,2vw,18px);color:var(--muted);max-width:500px;line-height:1.75;margin-bottom:40px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:72px;}
+.hero-stats{display:flex;gap:48px;flex-wrap:wrap;justify-content:center;}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:#fff;line-height:1;}
+.stat-l{font-size:12px;color:rgba(255,255,255,.6);margin-top:4px;}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.5);font-size:11px;letter-spacing:1px;animation:float 3s ease infinite;}
+.scroll-line{width:1px;height:40px;background:linear-gradient(rgba(255,255,255,.5),transparent);}
+
+/* ── MARQUEE ── */
+.marquee-wrap{padding:28px 0;border-top:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.2);overflow:hidden;}
+.marquee-inner{display:flex;overflow:hidden;}
+.marquee-track{display:flex;gap:60px;animation:marquee 28s linear infinite;flex-shrink:0;}
+.marquee-item{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.6);font-weight:500;white-space:nowrap;}
+
+/* ── FOR WHO ── */
+.who-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:56px;}
+.who-card{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:var(--rlg);padding:32px;transition:border-color .3s,transform .3s,box-shadow .3s;cursor:pointer;backdrop-filter:blur(12px);}
+.who-card:hover{border-color:rgba(255,255,255,.5);transform:translateY(-5px);box-shadow:0 28px 60px rgba(0,0,0,.15);}
+.who-icon{font-size:38px;margin-bottom:18px;display:block;}
+.who-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;margin-bottom:12px;}
+.who-desc{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:18px;}
+.tags{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{display:inline-flex;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:20px;padding:4px 12px;font-size:12px;font-weight:500;}
+
+/* ── BENTO ── */
+.bento{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto;gap:16px;margin-top:56px;}
+.bento-card{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:var(--rlg);padding:28px;transition:border-color .3s,transform .25s;backdrop-filter:blur(12px);}
+.bento-card:hover{border-color:rgba(255,255,255,.45);transform:translateY(-3px);}
+.bento-card.wide{grid-column:span 2;}
+.bento-ico{font-size:28px;margin-bottom:16px;}
+.bento-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;margin-bottom:8px;}
+.bento-desc{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.7;}
+.bento-number{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:rgba(255,255,255,.15);line-height:1;margin-top:16px;}
+
+/* ── HOW IT WORKS ── */
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;margin-top:64px;position:relative;}
+.how-card{padding:0 32px 0 0;position:relative;}
+.how-card::after{content:'';position:absolute;top:20px;right:0;width:1px;height:60%;background:linear-gradient(rgba(255,255,255,.3),transparent);}
+.how-card:last-child::after{display:none;}
+.how-num{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:700;color:rgba(255,255,255,.1);line-height:1;margin-bottom:-20px;}
+.how-title{font-size:16px;font-weight:600;margin-bottom:10px;color:#fff;}
+.how-desc{font-size:13.5px;color:rgba(255,255,255,.7);line-height:1.7;}
+
+/* ── TESTIMONIALS ── */
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:56px;}
+.testi-card{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:var(--rlg);padding:28px;transition:border-color .3s;backdrop-filter:blur(12px);}
+.testi-card:hover{border-color:rgba(255,255,255,.45);}
+.testi-stars{display:flex;gap:4px;margin-bottom:14px;}
+.testi-star{color:#fff;font-size:13px;}
+.testi-quote{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:#fff;line-height:1.65;margin-bottom:18px;}
+.testi-author{display:flex;align-items:center;gap:12px;}
+.testi-avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;}
+.testi-name{font-size:13.5px;font-weight:600;}
+.testi-role{font-size:12px;color:rgba(255,255,255,.65);}
+
+/* ── CTA ── */
+.cta-section{padding:100px 32px;text-align:center;position:relative;overflow:hidden;}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(255,255,255,.06) 0%,transparent 70%);pointer-events:none;}
+.cta-border{border-top:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.2);}
+.cta-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,64px);font-weight:600;letter-spacing:-1px;margin-bottom:16px;}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid rgba(255,255,255,.2);padding:40px 0;}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.footer-copy{font-size:13px;color:rgba(255,255,255,.55);}
+.footer-links{display:flex;gap:24px;}
+.footer-link{font-size:13px;color:rgba(255,255,255,.55);background:none;border:none;cursor:pointer;transition:color .2s;}
+.footer-link:hover{color:#fff;}
+
+/* ── GENERATOR ── */
+.gen-wrap{min-height:100vh;padding:96px 32px 60px;max-width:640px;margin:0 auto;}
+.gen-eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#fff;font-weight:600;margin-bottom:8px;}
+.gen-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4vw,44px);font-weight:600;letter-spacing:-.5px;margin-bottom:36px;}
+.step-bar{display:flex;align-items:center;margin-bottom:44px;}
+.step-item{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.step-circle{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;}
+.s-done{background:#fff;color:#ff2a2a;}
+.s-active{background:transparent;border:2px solid #fff;color:#fff;}
+.s-todo{background:transparent;border:2px solid rgba(255,255,255,.25);color:rgba(255,255,255,.35);}
+.step-label{font-size:11px;color:rgba(255,255,255,.7);white-space:nowrap;}
+.step-line{flex:1;height:1px;background:rgba(255,255,255,.2);margin:0 8px 16px;}
+.step-line.done{background:rgba(255,255,255,.55);}
+.profile-list{display:flex;flex-direction:column;gap:10px;}
+.profile-card{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);border-radius:var(--rlg);padding:16px 20px;cursor:pointer;display:flex;align-items:center;gap:16px;transition:all .25s;backdrop-filter:blur(8px);}
+.profile-card:hover{border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.18);}
+.profile-card.active{border-color:#fff;background:rgba(255,255,255,.2);}
+.pc-icon{font-size:26px;flex-shrink:0;}
+.pc-title{font-weight:600;font-size:15px;margin-bottom:3px;transition:color .2s;}
+.profile-card.active .pc-title{color:#fff;}
+.pc-desc{font-size:12px;color:rgba(255,255,255,.6);}
+.pc-check{margin-left:auto;width:20px;height:20px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#ff2a2a;flex-shrink:0;}
+.form-grid{display:flex;flex-direction:column;gap:16px;}
+.inp{width:100%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:var(--rsm);color:#fff;font-size:14px;padding:12px 16px;transition:border-color .25s;outline:none;backdrop-filter:blur(6px);}
+.inp:focus{border-color:rgba(255,255,255,.65);}
+.inp::placeholder{color:rgba(255,255,255,.45);}
+textarea.inp{resize:vertical;min-height:80px;}
+select.inp{appearance:none;cursor:pointer;}
+select.inp option{background:#cc2200;color:#fff;}
+.f-label{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:7px;font-weight:500;}
+.form-btns{display:flex;gap:10px;margin-top:24px;}
+
+/* ── ROADMAP ── */
+.rm-wrap{min-height:100vh;padding:90px 32px 60px;max-width:820px;margin:0 auto;}
+.back-btn{background:none;border:none;color:rgba(255,255,255,.65);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;margin-bottom:24px;transition:color .2s;padding:0;}
+.back-btn:hover{color:#fff;}
+.rm-header{margin-bottom:36px;}
+.rm-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.rm-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,40px);font-weight:600;letter-spacing:-.5px;margin-bottom:12px;}
+.rm-summary{font-size:14.5px;color:rgba(255,255,255,.75);line-height:1.75;}
+.rm-section{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:var(--rlg);padding:24px;margin-bottom:20px;backdrop-filter:blur(10px);}
+.rm-section-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#fff;font-weight:600;margin-bottom:16px;opacity:.7;}
+.phase-row{display:flex;gap:16px;}
+.phase-left{display:flex;flex-direction:column;align-items:center;width:14px;flex-shrink:0;}
+.phase-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
+.phase-line{width:1.5px;flex:1;background:linear-gradient(rgba(255,255,255,.4),transparent);margin:4px auto;min-height:28px;}
+.phase-body{flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:var(--rmd);padding:18px 20px;margin-bottom:14px;backdrop-filter:blur(8px);}
+.phase-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+.phase-title{font-size:15px;font-weight:600;}
+.phase-tag{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:5px;padding:3px 10px;font-size:11.5px;color:rgba(255,255,255,.7);}
+.phase-focus{font-size:13px;color:#fff;font-style:italic;margin-bottom:10px;opacity:.85;}
+.phase-actions{list-style:none;}
+.phase-action{font-size:13px;color:rgba(255,255,255,.8);padding:3.5px 0;display:flex;gap:8px;align-items:flex-start;line-height:1.55;}
+.phase-action::before{content:'→';color:#fff;flex-shrink:0;opacity:.7;}
+.phase-milestone{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:7px;padding:8px 12px;font-size:12.5px;color:#fff;margin-top:10px;display:flex;gap:8px;}
+.skills-row{display:flex;flex-wrap:wrap;gap:8px;}
+.resource-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.12);gap:12px;}
+.resource-row:last-child{border-bottom:none;}
+.res-name{font-size:14px;font-weight:500;margin-bottom:2px;}
+.res-type{font-size:12px;color:rgba(255,255,255,.55);}
+.badge-free{background:rgba(180,255,210,.15);border:1px solid rgba(180,255,210,.3);color:#c8ffe0;border-radius:4px;padding:2px 8px;font-size:11px;flex-shrink:0;}
+.badge-paid{background:rgba(255,220,220,.1);border:1px solid rgba(255,200,200,.25);color:#ffe0e0;border-radius:4px;padding:2px 8px;font-size:11px;flex-shrink:0;}
+.warning-item{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:var(--rsm);padding:12px 14px;font-size:13px;color:rgba(255,255,255,.8);display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;}
+.warn-icon{color:#fff;flex-shrink:0;font-size:14px;}
+.loading-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:80px 32px;text-align:center;}
+.spinner{width:52px;height:52px;border:1.5px solid rgba(255,255,255,.2);border-top:1.5px solid #fff;border-radius:50%;animation:spin 1.1s linear infinite;}
+.rm-bottom-cta{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:var(--rlg);padding:28px;text-align:center;margin-top:20px;}
+
+/* ── CHATBOT ── */
+.chat-btn{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.9);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;z-index:600;box-shadow:0 8px 32px rgba(0,0,0,.2);transition:transform .25s,box-shadow .25s;animation:pulse 3s ease infinite;}
+.chat-btn:hover{transform:scale(1.1);box-shadow:0 14px 44px rgba(0,0,0,.3);}
+.chat-panel{position:fixed;bottom:92px;right:24px;width:360px;max-height:540px;background:rgba(220,60,30,0.85);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.25);border-radius:20px;display:flex;flex-direction:column;z-index:599;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.3);animation:fadeUp .3s ease;}
+.chat-header{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);display:flex;align-items:center;gap:10px;}
+.chat-avatar{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#ff2a2a;flex-shrink:0;}
+.chat-status{font-size:11px;color:#c8ffe0;display:flex;align-items:center;gap:4px;}
+.chat-status-dot{width:6px;height:6px;border-radius:50%;background:#c8ffe0;}
+.chat-close{margin-left:auto;background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:20px;line-height:1;padding:0;transition:color .2s;}
+.chat-close:hover{color:#fff;}
+.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;}
+.msg-user{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:14px 14px 4px 14px;padding:10px 14px;align-self:flex-end;max-width:82%;font-size:13px;line-height:1.6;color:#fff;}
+.msg-ai{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:14px 14px 14px 4px;padding:10px 14px;align-self:flex-start;max-width:88%;font-size:13px;line-height:1.65;white-space:pre-wrap;color:#fff;}
+.chat-thinking{display:flex;gap:5px;align-items:center;padding:10px 14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:14px 14px 14px 4px;align-self:flex-start;}
+.dot-bounce{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.6);animation:shimmer 1.4s ease infinite;}
+.dot-bounce:nth-child(2){animation-delay:.2s;}
+.dot-bounce:nth-child(3){animation-delay:.4s;}
+.chat-input-row{padding:10px 12px;border-top:1px solid rgba(255,255,255,.15);display:flex;gap:8px;background:rgba(255,255,255,.05);}
+.chat-inp{flex:1;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;outline:none;transition:border-color .2s;}
+.chat-inp:focus{border-color:rgba(255,255,255,.55);}
+.chat-inp::placeholder{color:rgba(255,255,255,.45);}
+.chat-send{background:rgba(255,255,255,.9);border:none;border-radius:9px;padding:9px 13px;cursor:pointer;font-size:14px;color:#ff2a2a;font-weight:700;transition:background .2s;flex-shrink:0;}
+.chat-send:hover{background:#fff;}
+.chat-send:disabled{opacity:.4;cursor:not-allowed;}
+
+/* ── AUTH MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(180,40,20,.55);backdrop-filter:blur(16px);z-index:800;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal-box{background:rgba(220,60,30,0.75);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:36px;max-width:420px;width:100%;animation:fadeUp .4s ease;}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;margin-bottom:8px;color:#fff;}
+.modal-sub{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:24px;}
+.auth-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.2);margin-bottom:24px;}
+.auth-tab{flex:1;background:none;border:none;color:rgba(255,255,255,.6);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:10px;cursor:pointer;transition:color .2s;border-bottom:2px solid transparent;margin-bottom:-1px;}
+.auth-tab.active{color:#fff;border-bottom-color:#fff;}
+.auth-error{background:rgba(255,200,200,.1);border:1px solid rgba(255,200,200,.25);color:#ffe0e0;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:14px;}
+.auth-success{background:rgba(180,255,210,.1);border:1px solid rgba(180,255,210,.25);color:#c8ffe0;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:14px;}
+.nav-user{display:flex;align-items:center;gap:10px;}
+.user-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:5px 14px;font-size:12.5px;color:#fff;font-weight:500;}
+
+/* ── EXPLORE SECTION ── */
+.explore-wrap{min-height:100vh;padding:90px 32px 60px;max-width:900px;margin:0 auto;}
+.explore-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px;}
+.ex-tab{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--rsm);padding:8px 18px;font-size:13px;cursor:pointer;transition:all .2s;color:rgba(255,255,255,.7);backdrop-filter:blur(6px);}
+.ex-tab.active{background:rgba(255,255,255,.25);border-color:#fff;color:#fff;}
+.ex-tab:hover{border-color:rgba(255,255,255,.45);color:#fff;}
+.path-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:var(--rlg);padding:24px;margin-bottom:16px;cursor:pointer;transition:all .25s;backdrop-filter:blur(10px);}
+.path-card:hover,.path-card.open{border-color:rgba(255,255,255,.4);}
+.path-card-header{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.path-icon{font-size:24px;flex-shrink:0;}
+.path-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;}
+.path-sub{font-size:13px;color:rgba(255,255,255,.65);margin-top:2px;}
+.path-toggle{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;flex-shrink:0;transition:transform .3s;}
+.path-toggle.open{transform:rotate(45deg);}
+.path-body{overflow:hidden;transition:max-height .4s ease;max-height:0;}
+.path-body.open{max-height:2000px;}
+.path-body-inner{padding-top:20px;border-top:1px solid rgba(255,255,255,.15);margin-top:16px;}
+.sub-path{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:var(--rmd);padding:16px;margin-bottom:12px;}
+.sub-path-title{font-size:14px;font-weight:600;margin-bottom:8px;color:#fff;}
+.sub-path-list{list-style:none;}
+.sub-path-item{font-size:13px;color:rgba(255,255,255,.72);padding:3px 0;display:flex;gap:8px;align-items:flex-start;line-height:1.55;}
+.sub-path-item::before{content:'◆';color:#fff;font-size:7px;flex-shrink:0;margin-top:4px;opacity:.6;}
+.path-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+
+/* ── GRID LINES (from reference) ── */
+.grid-lines{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.08;
+  background-image:linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:33.333% 33.333%;}
+
+/* ── FONT OVERRIDE ── */
+h1,h2,h3{font-family:'Outfit','Cormorant Garamond',sans-serif;}
+.hero-h1{font-family:'Outfit',sans-serif;font-weight:700;}
+.logo-text{font-family:'Outfit',sans-serif;font-size:19px;font-weight:700;letter-spacing:.3px;}
+
+/* ── SECTION LABEL OVERRIDE ── */
+.section-label,.eyebrow{color:#fff;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .bento{grid-template-columns:1fr;}
+  .bento-card.wide{grid-column:span 1;}
+  .how-card::after{display:none;}
+  .how-card{padding:0 0 32px 0;}
+  .nav-links{display:none;}
+  .hero-stats{gap:24px;}
+  .chat-panel{width:calc(100vw - 32px);right:16px;}
+  .wrap{padding:0 20px;}
+  .gen-wrap,.rm-wrap,.explore-wrap{padding:90px 20px 60px;}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<div class="grain"></div>
+<div id="spotlight"></div>
+<div class="grid-lines"></div>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+
+/* ═══════════════════════════
+   GEMINI CONFIG — Optional
+   If quota is empty, offline roadmaps kick in automatically.
+   ═══════════════════════════ */
+const GEMINI_API_KEY = "AIzaSyApaChLd9FY-gHGUXhEPRopCV0ePvTIJzU";
+let GEMINI_MODEL = "gemini-2.0-flash";
+
+const {useState,useEffect,useRef,useCallback}=React;
+
+/* ═══════════════════════════
+   GEMINI HELPER
+   ═══════════════════════════ */
+async function callGemini(messages,systemPrompt="",apiKey=""){
+  const contents=messages.map(m=>({
+    role:m.role==="assistant"?"model":"user",
+    parts:[{text:m.content}]
+  }));
+  const body={contents,generationConfig:{maxOutputTokens:1400,temperature:0.8}};
+  if(systemPrompt) body.systemInstruction={role:"user",parts:[{text:systemPrompt}]};
+  const url=`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+  let res,data;
+  try{
+    res=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+    data=await res.json();
+  }catch(e){ throw new Error("Network error"); }
+  if(data.error){ throw new Error(data.error.message||"Gemini API error"); }
+  const text=data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  if(!text) throw new Error("Empty response");
+  return text;
+}
+
+/* ═══════════════════════════════════════════════════
+   OFFLINE ROADMAP DATABASE
+   Full detailed roadmaps — NEVER shows error
+   ═══════════════════════════════════════════════════ */
+const OFFLINE_ROADMAPS = {
+
+  /* ── CLASS 10 → PCM ── */
+  "s10_pcm": {
+    headline:"From Class 10 to Engineering Excellence",
+    summary:"You're at the perfect starting point for a high-impact engineering career. PCM opens doors to IIT, NIT, BITS, and every top tech opportunity in India and abroad.",
+    timeline:"2-3 years to college admission",
+    difficulty:"Highly Competitive",
+    salaryRange:"IIT: ₹20-80 LPA fresher | NIT/BITS: ₹12-30 LPA",
+    topSkills:["Mathematics","Physics","Chemistry","Problem Solving","Time Management"],
+    phases:[
+      {id:1,title:"Foundation & Stream Clarity",duration:"Class 10-11 (3 months)",focus:"Solidify math & science fundamentals before PCM begins",
+       actions:["Study NCERT Math chapters 1-15 thoroughly — JEE is 60% NCERT logic","Start with Khan Academy Physics for conceptual clarity","Join a reputed coaching: FIITJEE, Allen, Resonance, or Aakash","Build a daily 4-6 hour study habit now — it will only increase"],
+       milestone:"Complete NCERT Class 10 Math & Science revision with 90%+ mock scores"},
+      {id:2,title:"Class 11 — Build the Core",duration:"1 year",focus:"PCM fundamentals — the hardest year, don't skip anything",
+       actions:["Physics: Mechanics, Thermodynamics, Waves (HC Verma Vol 1 is your bible)","Chemistry: Physical & Organic chemistry foundation (NCERT first, then MS Chauhan)","Maths: Calculus, Trigonometry, Algebra (RD Sharma + Cengage)","Attempt 2 chapter-wise tests per week at your coaching institute","DO NOT take Class 11 lightly — 45% of JEE is from Class 11 syllabus"],
+       milestone:"Score above 70% in Class 11 internal exams across all three subjects"},
+      {id:3,title:"Class 12 + JEE Preparation",duration:"1 year",focus:"Complete syllabus + JEE Mains & Advanced strategy",
+       actions:["Complete Class 12 syllabus by November (6 months before JEE)","Solve 10 previous year JEE papers fully timed","Attempt JEE Mains Mock: Target 150+ score in January attempt","Register for JEE Advanced only after clearing JEE Mains cutoff","Board exams: Target 90%+ (required for NIT/BITS admission)"],
+       milestone:"JEE Mains: 99+ percentile | JEE Advanced: Rank under 5000"},
+      {id:4,title:"College Selection & Admission",duration:"2-3 months (April-June)",focus:"JoSAA counselling, BITSAT, state engineering exams",
+       actions:["Attempt BITSAT (BITS Pilani) — separate exam, score 300+","Fill JoSAA choices wisely: branch > college up to NIT tier","If JEE rank is 5000-50000: Best NITs, IIITs, state colleges","Consider VIT, Manipal, SRM as safety nets — still strong placements","For abroad: Check Purdue, ASU, UBC — apply with JEE scores as proof of rigor"],
+       milestone:"Secure admission to IIT/NIT/BITS or top private engineering college"},
+    ],
+    resources:[
+      {name:"HC Verma — Concepts of Physics",type:"Book",free:false},
+      {name:"NCERT All Subjects",type:"Book (mandatory)",free:true},
+      {name:"Unacademy / PhysicsWallah",type:"Online Coaching",free:true},
+      {name:"JEE Previous Year Papers",type:"Practice Material",free:true},
+      {name:"MS Chauhan Organic Chemistry",type:"Book",free:false},
+      {name:"Khan Academy",type:"YouTube / Platform",free:true},
+    ],
+    warnings:["Most students fail JEE because they ignore Class 11 — it's 45% of JEE syllabus","Coaching alone won't work — self-study of 4+ hours daily is non-negotiable","Do NOT choose branch based on peer pressure — CSE hype fades; choose what you love","JEE Advanced requires both Mains clearing AND 75% in boards — don't neglect boards"],
+  },
+
+  /* ── CLASS 10 → PCB ── */
+  "s10_pcb": {
+    headline:"Your Journey to Medicine Begins Here",
+    summary:"PCB is your passport to MBBS, BDS, Pharmacy, Nursing, Biotech, and emerging healthcare careers. The path is demanding but deeply rewarding.",
+    timeline:"2-3 years to college admission",
+    difficulty:"Highly Competitive",
+    salaryRange:"MBBS Doctor: ₹8-20 LPA starting | Specialist: ₹30-80 LPA",
+    topSkills:["Biology","Chemistry","Physics","Memorization Systems","Consistency"],
+    phases:[
+      {id:1,title:"Stream Foundation",duration:"3 months",focus:"Lock in on Biology fundamentals and NEET awareness",
+       actions:["Understand NEET pattern: 180 questions — Bio(90), Chemistry(45), Physics(45)","Buy NCERT Biology Class 11 & 12 — 90% of NEET Biology is directly from NCERT","Join NEET-specific coaching: Allen Kota, Aakash, PhysicsWallah","Build reading + diagram habit — Biology needs visual memory"],
+       milestone:"Complete NCERT Biology Class 10 revision; understand NEET exam structure fully"},
+      {id:2,title:"Class 11 — Deep Biology & Chemistry",duration:"1 year",focus:"Plant & Animal kingdom, Cell biology, Organic chemistry foundations",
+       actions:["Read NCERT Biology twice — mark important lines for direct NEET questions","Study Organic Chemistry from NCERT + MS Chauhan for extra practice","Physics: Focus on NEET-level (not JEE-level) — HC Verma lite + NCERT examples","Attempt weekly mock tests at coaching center — build exam stamina","Create hand-drawn diagrams for every biology chapter — it's memory magic"],
+       milestone:"80%+ in Class 11 Biology tests; complete Organic Chemistry module"},
+      {id:3,title:"Class 12 + NEET Prep",duration:"1 year",focus:"Complete syllabus revision + NEET strategy",
+       actions:["Finish Class 12 syllabus by January — 5 months for NEET revision","NEET mock tests: Attempt full 3.5-hour mocks every Sunday from February","Target: 650+ out of 720 for government MBBS seat","Boards: 50% minimum required for NEET; target 85%+ for safety","Research: AIIMS, JIPMER have separate exams — register early"],
+       milestone:"NEET Mock score: 600+; Board score: 85%+"},
+      {id:4,title:"NEET Result & Admission",duration:"2-3 months",focus:"Counselling, backup options, private college evaluation",
+       actions:["NEET 650+: Government MBBS in state/central counselling","NEET 550-650: Private medical colleges (₹50L-1Cr fees — evaluate ROI)","If not MBBS: BDS (Dentistry), B.Pharm, B.Sc Nursing are excellent alternatives","Consider: BSc Biotech + MSc + Research path for science-lovers","Abroad: Philippines, Russia, Ukraine MBBS (cheaper but FMGE exam required later)"],
+       milestone:"Secure MBBS/BDS/Allied Health admission"},
+    ],
+    resources:[
+      {name:"NCERT Biology (11 & 12)",type:"Book — most important resource",free:true},
+      {name:"PhysicsWallah NEET Course",type:"Online Coaching",free:true},
+      {name:"Allen NEET Study Material",type:"Coaching Material",free:false},
+      {name:"NEET Previous 10 Year Papers",type:"Practice",free:true},
+      {name:"Aakash Digital",type:"Online Platform",free:false},
+      {name:"Trueman's Biology",type:"Reference Book",free:false},
+    ],
+    warnings:["Never memorize NCERT Biology — understand and visualize; rote learning fails in NEET MCQs","NEET 2024 had 24L applicants for ~1L MBBS seats — start serious prep in Class 10 itself","Private MBBS costs ₹50L-1Cr. Calculate ROI before choosing private over alternative careers","Dropping a year for NEET re-attempt is okay IF you have a solid strategy — random drops waste time"],
+  },
+
+  /* ── CLASS 10 → Commerce ── */
+  "s10_commerce": {
+    headline:"Commerce — Gateway to Business, Finance & Law",
+    summary:"Commerce stream unlocks CA, MBA, BBA, Law, Banking, Stock Markets, and the entire business world. It's the most versatile stream with multiple high-paying career paths.",
+    timeline:"2-3 years to college/CA foundation",
+    difficulty:"Intermediate",
+    salaryRange:"CA: ₹8-25 LPA fresher | MBA (IIM): ₹25-80 LPA | BBA: ₹4-10 LPA",
+    topSkills:["Accountancy","Economics","Mathematics/Business Math","Analytical Thinking","Communication"],
+    phases:[
+      {id:1,title:"Class 11 Commerce Foundation",duration:"1 year",focus:"Master Accountancy, Economics, Business Studies fundamentals",
+       actions:["Accountancy: Master Trial Balance, P&L, Balance Sheet — NCERT is gold","Economics: Both Micro and Macro — understand real-world application","Business Studies: Conceptual understanding + case studies","Maths (if opted): Statistics & basic calculus — very helpful for MBA/CA","Consider CA Foundation registration from Class 11 itself — gives head start"],
+       milestone:"90%+ in Accountancy and Economics in Class 11 finals"},
+      {id:2,title:"Class 12 + Entrance Prep",duration:"1 year",focus:"Board excellence + entrance exam preparation",
+       actions:["Target 95%+ in Commerce boards — DU, Christ, Symbiosis require high cutoffs","Prepare for: BBA entrances (IPU-CET, SET, NPAT, CUET-UG)","CA Foundation: Register after Class 12 boards; attempt in November","For BCom Hons DU: Score 97%+ and apply in CSAS portal","Law option: CLAT preparation — start 6 months before exam"],
+       milestone:"Class 12: 95%+ score | BBA entrance: Clear at least 2 exams"},
+      {id:3,title:"Undergraduate + Career Path Lock",duration:"3 years",focus:"Choose and execute: CA / MBA / Law / Finance career track",
+       actions:["CA Track: Foundation → Intermediate (2 groups) → Final — 5 years total","MBA Track: Strong GPA + internships + CAT prep from 2nd year","Finance Track: CFA Level 1 alongside BCom — opens global doors","Law Track: NLSIU, NALSAR via CLAT — 5-year BA LLB program","BBA: Use 3 years for internships, competitions, and MBA test prep"],
+       milestone:"Clear CA Foundation OR secure top BBA/BCom admission"},
+    ],
+    resources:[
+      {name:"NCERT Accountancy & Economics",type:"Books",free:true},
+      {name:"T.S. Grewal Accountancy",type:"Practice Book",free:false},
+      {name:"ICAI CA Foundation Material",type:"Official Study Material",free:false},
+      {name:"Unacademy Commerce",type:"Online Platform",free:true},
+      {name:"Investopedia",type:"Finance Learning Website",free:true},
+      {name:"Vajiram & Ravi (for UPSC later)",type:"Optional/Future",free:false},
+    ],
+    warnings:["Commerce without Math limits you to BCom only — strongly consider Maths for CA/MBA/Finance","CA is a marathon — Foundation → Inter → Final takes 4-5 years minimum with multiple attempts","DU BCom cutoffs touch 99% — boards are everything in Commerce stream","Never choose Commerce just because 'it's easy' — it's competitive at the top levels too"],
+  },
+
+  /* ── CLASS 10 → Arts/Humanities ── */
+  "s10_arts": {
+    headline:"Arts & Humanities — The Most Versatile Stream",
+    summary:"Humanities opens doors to Law (CLAT), Civil Services (IAS/IPS), Journalism, Psychology, Design, International Relations, and many globally sought careers. Don't underestimate it.",
+    timeline:"2-3 years to college/UPSC/Law",
+    difficulty:"Intermediate to Advanced",
+    salaryRange:"IAS: ₹56,100-2.5L/month | Lawyer: ₹6-50 LPA | Psych: ₹5-20 LPA",
+    topSkills:["Critical Thinking","Writing","Research","Communication","Current Affairs"],
+    phases:[
+      {id:1,title:"Class 11-12 Humanities Foundation",duration:"2 years",focus:"Excel in History, Political Science, Economics, Psychology or Geography",
+       actions:["Choose electives wisely: PolSci+History+Geo for UPSC track; Psych+Sociology for social sciences","NCERT for every subject — UPSC questions directly from NCERT text","Read The Hindu newspaper daily — builds vocabulary, GK, and writing skill","Join debate club, MUN, essay competitions — these matter for college and career"],
+       milestone:"85%+ in Class 12 boards; strong essay writing ability"},
+      {id:2,title:"College & Entrance Strategy",duration:"1 year",focus:"Target premium colleges through CLAT, CUET, design entrances, or journalism schools",
+       actions:["CLAT (Law): NLU network — top lawyers, judges, corporate counsels come from here","CUET: For DU BA (History, PolSci, Economics) — score 95%+","NID/NIFT (Design): Separate entrance — if creative arts is your strength","Journalism: Symbiosis, XIC, IIMC after Class 12","Psychology: Miranda House DU, Christ Bengaluru, TISS Mumbai"],
+       milestone:"Clear preferred entrance exam OR secure 90%+ for direct college admission"},
+      {id:3,title:"UG & Career Direction",duration:"3 years",focus:"Build expertise + internships + competitive exam foundation",
+       actions:["Civil Services track: Start UPSC prep seriously in 2nd year of graduation","Law track: Build moot court, internship at advocate chambers from 2nd year","Journalism: Work at college newspaper, intern at newspapers/TV channels","Psychology: Target MSc at TISS/Delhi Uni; Clinical Psych is a 6-year journey","Mass Communication: Portfolio-building + digital media internships"],
+       milestone:"Internship in chosen field completed; clear direction set by final year"},
+    ],
+    resources:[
+      {name:"NCERT 6-12 (all subjects)",type:"Books — mandatory for UPSC",free:true},
+      {name:"The Hindu Newspaper",type:"Daily Reading",free:false},
+      {name:"Drishti IAS / Vision IAS",type:"UPSC Prep Platform",free:true},
+      {name:"CLAT Previous Papers",type:"Practice",free:true},
+      {name:"Coursera — Introduction to Psychology",type:"Online Course",free:true},
+      {name:"GKToday",type:"Current Affairs Website",free:true},
+    ],
+    warnings:["Arts stream is NOT the 'easy' stream — UPSC has 0.1% selection rate; Law requires deep commitment","Don't choose Arts by default — choose it strategically for CLAT, UPSC, Design, or Journalism","Salary growth in Arts careers is slower initially but very high at senior levels (judge, senior lawyer, IAS)","Parents often discourage Arts — have a clear plan to show them the career pathway"],
+  },
+
+  /* ── CLASS 10 → Diploma ── */
+  "s10_diploma": {
+    headline:"Diploma — Fast Track to Skilled Employment",
+    summary:"Diploma is a smart, practical choice that gets you job-ready in 3 years. Lateral entry to B.Tech 2nd year is possible — giving you a degree route too.",
+    timeline:"3 years diploma + optional 3 years engineering",
+    difficulty:"Beginner to Intermediate",
+    salaryRange:"Diploma fresher: ₹2-6 LPA | After B.Tech lateral: ₹6-18 LPA",
+    topSkills:["Practical Skills","Technical Drawing","Workshop Skills","Domain Expertise","Problem Solving"],
+    phases:[
+      {id:1,title:"Diploma Admission & Stream Selection",duration:"1 month",focus:"Choose the right polytechnic and trade",
+       actions:["Top diploma streams: Computer Science, Electronics, Mechanical, Civil, Electrical","Apply to government polytechnics — quality is higher, fees are lower (₹15-30K/year)","Maharashtra DTE, Delhi Polytechnic, Gujarat ACPDC — state admission portals","Choose stream based on interest, NOT just seat availability"],
+       milestone:"Secure admission to a government polytechnic in your preferred stream"},
+      {id:2,title:"Diploma Program",duration:"3 years",focus:"Technical skills + practical training + industry certifications",
+       actions:["Maintain 70%+ marks — needed for B.Tech lateral entry","Complete industrial training in semester 5-6 at local companies","Get certifications: AutoCAD (Mechanical/Civil), Python (CS), CCNA (Electronics)","Join polytechnic competitions, project exhibitions — builds portfolio","Network with senior batch students — they're your placement leads"],
+       milestone:"Diploma with 70%+ marks + 1 industry internship + 2 certifications"},
+      {id:3,title:"B.Tech Lateral Entry OR Job",duration:"Choice point",focus:"Either continue to degree OR start working",
+       actions:["B.Tech Lateral: Direct 2nd year admission to engineering — saves 1 year","Apply to: NIT lateral entry, state engineering lateral entry (LEET exam)","Job route: Start as junior technician/engineer — grow through experience","Many diploma holders in Infosys/TCS start at ₹3.5L but grow fast with skills"],
+       milestone:"Either B.Tech lateral entry OR first job with ₹3+ LPA offer"},
+    ],
+    resources:[
+      {name:"Polytechnic State Board Textbooks",type:"Books",free:true},
+      {name:"AutoCAD (Student license)",type:"Software",free:true},
+      {name:"NPTEL Technical Courses",type:"Online Platform",free:true},
+      {name:"Coursera / edX",type:"Online Platform",free:true},
+    ],
+    warnings:["Choose government polytechnics — private ones vary wildly in quality","Don't skip industrial training — it's your first real job experience","Lateral entry B.Tech is tough — maintain good diploma grades throughout"],
+  },
+
+  /* ── CLASS 12 → Engineering / JEE ── */
+  "s12_engineering": {
+    headline:"Engineering Road to IIT/NIT/BITS — Your Definitive Plan",
+    summary:"You're at the final stretch before college. Every month matters now. Here's the exact sequence to maximize your JEE result and secure the best possible seat.",
+    timeline:"6-12 months to admission",
+    difficulty:"Highly Competitive",
+    salaryRange:"IIT CSE: ₹25-80 LPA | NIT: ₹12-25 LPA | Private tier-1: ₹8-18 LPA",
+    topSkills:["JEE Mathematics","Physics Problem Solving","Organic Chemistry","Time Management","Mock Test Strategy"],
+    phases:[
+      {id:1,title:"Full Syllabus Completion",duration:"1-3 months",focus:"Complete every chapter, no gaps",
+       actions:["Make a chapter-wise checklist for all 3 subjects — mark completed vs pending","Physics: Optics, Modern Physics, Electrodynamics are high-weightage — prioritize","Chemistry: Coordination Compounds, Organic Reactions — direct JEE questions","Maths: Calculus, Vectors, 3D Geometry, Probability — solve 50+ questions per chapter","Never skip a chapter — JEE surprises with low-weightage topics every year"],
+       milestone:"100% syllabus covered across Physics, Chemistry, Mathematics"},
+      {id:2,title:"Revision & Mock Test Marathon",duration:"2-3 months",focus:"Solve, analyze, improve — relentlessly",
+       actions:["Attempt full JEE Mains mock every 3 days (3-hour timed)","After each mock: Spend 2x the mock time analyzing mistakes","Identify your top 3 weak areas and revise those chapters specifically","Solve all 12 sets of JEE 2013-2024 previous year papers — fully timed","For Advanced aspirants: Also solve IIT JEE 2000-2012 papers"],
+       milestone:"Consistent 90+ percentile in JEE Mains mocks"},
+      {id:3,title:"JEE Mains — January Attempt",duration:"JEE Mains (Jan)",focus:"Execute. Don't over-revise last night.",
+       actions:["Sleep 8 hours before exam day — cognitive performance is 30% higher","Attempt safe questions first — don't get stuck on 1 hard question for 10 minutes","Time split: Physics 60 min, Chemistry 40 min, Maths 60 min","Target: 250+ for IIT Advanced eligibility; 200+ for good NITs","Result in 2 weeks — if not satisfied, attempt again in April session"],
+       milestone:"JEE Mains: 99+ percentile OR 95+ percentile for NIT options"},
+      {id:4,title:"JEE Advanced / Backup Planning",duration:"2-3 months",focus:"Advanced prep OR college selection strategy",
+       actions:["JEE Advanced: Completely different style — conceptual, multi-correct, integer type","BITSAT: Register and prepare (BITS Pilani, Goa, Hyderabad) — score 300+","State CET: KCET, MHT-CET, WBJEE — good colleges as backup","JoSAA Counselling: Fill 25 choices wisely — branch matters more than institute rank below IIT","Private options: VIT Vellore, Manipal, KIIT have solid placements"],
+       milestone:"Admission to IIT/NIT/BITS or top private engineering college"},
+    ],
+    resources:[
+      {name:"JEE Previous 12 Years Papers",type:"Practice (most important)",free:true},
+      {name:"HC Verma Physics",type:"Book",free:false},
+      {name:"PhysicsWallah / Unacademy JEE",type:"Online",free:true},
+      {name:"Cengage Mathematics Series",type:"Books",free:false},
+      {name:"NCERT Chemistry (11+12)",type:"Books",free:true},
+    ],
+    warnings:["The last 3 months before JEE are more important than the 2 years of coaching — don't relax now","Percentile not rank matters for NIT — 95 percentile ≠ rank 50,000 exactly, varies by difficulty","Branch matters more than college beyond IIT level — CSE at NIT Trichy > Mechanical at IIT Dhanbad (salary-wise)","If you can't crack JEE this year, plan a serious drop year — random drops waste time"],
+  },
+
+  /* ── CLASS 12 → MBBS/NEET ── */
+  "s12_mbbs": {
+    headline:"NEET MBBS Strategy — Final Year Execution Plan",
+    summary:"NEET is the single gateway to MBBS in India. Your Class 12 year determines everything. Here's your month-by-month plan to hit 650+.",
+    timeline:"6-12 months to NEET",
+    difficulty:"Highly Competitive",
+    salaryRange:"MBBS: ₹8-15 LPA; MD/MS specialist: ₹30-80 LPA; Abroad: $200K+",
+    topSkills:["Biology (NCERT mastery)","Organic Chemistry","Physics (NEET level)","Speed & Accuracy","Test Temperament"],
+    phases:[
+      {id:1,title:"NCERT Mastery — Biology",duration:"2-3 months",focus:"Read NCERT Biology 11+12 three times completely",
+       actions:["Read NCERT Biology line by line — underline every line that can be a NEET MCQ","Create chapter-wise notes with diagrams — Morphology, Cell Biology, Genetics","Complete 2013-2024 NEET Biology previous papers — 90 questions per paper","Biology target: 85/90 questions correct — this is where NEET is won or lost","FlashCards for taxonomy, diseases, hormones — high-frequency NEET areas"],
+       milestone:"Attempt NEET Biology section from 2019 paper — score 80+/90"},
+      {id:2,title:"Chemistry & Physics Revision",duration:"2 months",focus:"Chemistry: Organic reactions; Physics: Formula mastery + numericals",
+       actions:["Chemistry NEET-level: NCERT reactions + NCERT examples are directly asked","Organic: Named reactions, mechanisms, conversions — 15 questions from Organic alone","Physical Chemistry: Equilibrium, Thermodynamics, Electrochemistry — numerical heavy","Physics: 45 questions — use formula sheet approach, not deep derivations","Physics target: 35+ correct — don't over-invest, Biology wins NEET"],
+       milestone:"NEET Chemistry: 40+/45; Physics: 35+/45 in timed mock section tests"},
+      {id:3,title:"Mock Test Marathon",duration:"2 months",focus:"Full 3.5-hour mocks every alternate day",
+       actions:["Attempt official NTA mock tests (free at nta.ac.in)","Target: 600+ consistently before actual NEET","Error log: Every wrong question gets noted + chapter tagged + revised within 2 days","Last month: 3 mocks per week + pure revision, no new topics","Sleep schedule: Fix sleep by 10:30 PM — NEET is at 2 PM, peak performance matters"],
+       milestone:"Consistent 620+ in NTA full mocks"},
+      {id:4,title:"NEET Result & Admission",duration:"May-November",focus:"Counselling strategy + backup planning",
+       actions:["650+: Government MBBS (MCC counselling + state counselling)","550-649: Private medical colleges — verify MCI approval first; calculate total cost","BDS (Dental): 500+ NEET; great career with ₹8-20 LPA in private practice","AYUSH: BAMS, BHMS — government colleges if NEET score is 400-500","Abroad MBBS: Philippines, Kyrgyzstan (cheaper) — must clear FMGE/NExT later"],
+       milestone:"Secure government MBBS seat OR make an informed private college decision"},
+    ],
+    resources:[
+      {name:"NCERT Biology 11 & 12",type:"Primary resource — non-negotiable",free:true},
+      {name:"PhysicsWallah Arjuna NEET Batch",type:"Online Course",free:true},
+      {name:"MTG NEET 30 Years Papers",type:"Practice Book",free:false},
+      {name:"Trueman's Biology",type:"Reference",free:false},
+      {name:"NTA Official Mock Tests",type:"Online Practice",free:true},
+    ],
+    warnings:["NEET 2024: 24 lakh applicants, ~1 lakh government seats — prepare for fierce competition","Never skip NCERT line — NEET frequently quotes exact NCERT lines as answer options","Private MBBS at ₹80L-1Cr: A GP earns ₹8-12 LPA — loan repayment takes 8-12 years","Don't wait for NEET result to research BDS/AYUSH/Allied Health alternatives"],
+  },
+
+  /* ── CLASS 12 → BCA/BSc IT ── */
+  "s12_bca": {
+    headline:"BCA/BSc IT — Your Tech Career Launchpad",
+    summary:"BCA and BSc IT are excellent entry points into software development. Combined with the right skills and projects, you can land ₹8-15 LPA jobs at top product companies.",
+    timeline:"3 years degree + 6 months intensive placement prep",
+    difficulty:"Intermediate",
+    salaryRange:"Fresher: ₹4-12 LPA | After 2-3 years: ₹12-25 LPA",
+    topSkills:["Programming (Python/Java/JavaScript)","Data Structures & Algorithms","Web/App Development","Database Management","Problem Solving"],
+    phases:[
+      {id:1,title:"College Selection & BCA/BSc Admission",duration:"1-2 months",focus:"Choose college wisely — placement record matters most",
+       actions:["Top colleges: Christ Bengaluru, Symbiosis, Amity, MCA pathway colleges","Check placement reports before choosing — ask for actual company names","Private vs Government: Government BCA is cheaper but often has weaker placements","If MHT-CET cleared: BCA at Pune/Mumbai colleges is excellent value","BCA from IGNOU (distance) + self-learning works IF self-disciplined"],
+       milestone:"Admission secured to a BCA/BSc IT program with 60%+ placement history"},
+      {id:2,title:"Year 1-2 — Foundation + Self Learning",duration:"2 years",focus:"Academic + parallel self-skilling in real industry tech",
+       actions:["College teaches C, Java, DBMS — master these but go beyond","Start Python from Month 1 (not college-prescribed C) — it opens ML, automation, web","HTML/CSS/JavaScript from FreeCodeCamp — 300 hours certification is free","Year 2: Pick a track — Web Dev (MERN stack) OR Python/Data Science OR Android","Solve 2 LeetCode easy problems per day from Year 2 onwards — builds DSA"],
+       milestone:"Complete 2 personal projects (GitHub) + 500 LeetCode problems by end of Year 2"},
+      {id:3,title:"Year 3 — Internship + Placement Prep",duration:"1 year",focus:"Real experience + interview preparation",
+       actions:["Apply to internships on Internshala, LinkedIn, AngelList — even unpaid for experience","Target: 1 solid internship by 6th semester — converts to PPO 40% of time","DSA: Reach 150 LeetCode medium problems + arrays, linked lists, trees, DP","System Design basics: For companies like Paytm, Freshworks, Zoho","Build portfolio: 3 projects on GitHub with README and demo links"],
+       milestone:"1 internship + 200+ LeetCode + 3 portfolio projects"},
+      {id:4,title:"Placement Season",duration:"Final 6 months",focus:"Crack campus + off-campus placements",
+       actions:["On-campus: Apply to every company visiting, even service companies as backup","Off-campus: LinkedIn cold message to 20 referrals per week — this works","Target companies: Zoho, Freshworks, Infosys, Wipro, Hexaware, startups","After-degree MCA: If you want tier-1 IT companies, MCA from NIT is powerful (NIMCET exam)","Salary negotiation: Always counter-offer — average negotiation wins 15% more"],
+       milestone:"Job offer of ₹5+ LPA before graduation"},
+    ],
+    resources:[
+      {name:"FreeCodeCamp",type:"Free Web Dev Platform",free:true},
+      {name:"CS50 Harvard (edX)",type:"Free Programming Course",free:true},
+      {name:"LeetCode",type:"DSA Practice Platform",free:true},
+      {name:"Internshala",type:"Internship Platform",free:true},
+      {name:"The Odin Project",type:"Full Stack Web Dev",free:true},
+    ],
+    warnings:["BCA degree alone won't get you placed — skills and projects matter far more than marks","Many BCA students waste 3 years without building any real projects — don't be one of them","Avoid paid coding bootcamps during BCA — free resources (FreeCodeCamp, CS50) are equally good","NIMCET for MCA (NIT) is very competitive — start prep in final year BCA if this is your plan"],
+  },
+
+  /* ── CLASS 12 → BSc ── */
+  "s12_bsc": {
+    headline:"BSc — Building a Research or Industry-Ready Career",
+    summary:"BSc is the gateway to MSc, PhD, research careers, and increasingly to data science and analytics roles. Strategic choice of specialization and institution matters enormously.",
+    timeline:"3 years BSc + 2 years MSc or direct work",
+    difficulty:"Intermediate",
+    salaryRange:"BSc fresher: ₹3-6 LPA | MSc/Research: ₹6-15 LPA | PhD stipend: ₹37K/month",
+    topSkills:["Research Methodology","Statistics","Domain Expertise","Scientific Writing","Data Analysis"],
+    phases:[
+      {id:1,title:"BSc Admission Strategy",duration:"1-2 months",focus:"Choose subject and institution for maximum career upside",
+       actions:["Best BSc streams: Physics, Chemistry, Maths, Statistics, Computer Science","Top colleges: Miranda House/St. Stephens DU, Presidency Kolkata, Christ Bengaluru, Fergusson Pune","IISc BSc Research (Bengaluru) — India's best science program, apply via KVPY/JEE","IISER (8 campuses) — BS-MS dual degree, world-class research, stipend included","For IISc/IISER: Appear for IISER aptitude test + KVPY fellowship exam"],
+       milestone:"Admission to IISc/IISER OR top DU/state university BSc program"},
+      {id:2,title:"BSc Program — Build Research Base",duration:"3 years",focus:"Academic excellence + research exposure + optional coding skills",
+       actions:["Maintain 8.5+ CGPA — required for MSc admissions (IIT JAM cutoffs)","Summer Research: Apply to SRFP (IISc), VSRP (TIFR), SURGE (IIT Kanpur) — free, prestigious","Learn Python/R for data analysis — opens Data Science, Biostatistics, Bioinformatics tracks","Attend national science conferences — build your academic network early","For Physics/Chemistry: Start IIT JAM prep from 2nd year — it's your MSc gateway"],
+       milestone:"8.5+ CGPA + 1 summer research project + IIT JAM registration"},
+      {id:3,title:"MSc / Career Decision",duration:"6 months pre-graduation",focus:"IIT JAM, CUET-PG, or direct industry entry",
+       actions:["IIT JAM (MSc): Covers Physics, Chemistry, Maths, Statistics, Biotech — IIT MSc is gold","MSc from top university → PhD → Research Scientist/Professor path","Data Science pivot: BSc Maths/Stats + Python skills = analytics roles at ₹8-14 LPA","Government jobs: CSIR NET, GATE (for research labs), DRDO, BARC","Teaching: SET/NET for college lecturer positions"],
+       milestone:"Clear IIT JAM or CUET-PG OR secure data analytics internship"},
+    ],
+    resources:[
+      {name:"NCERT 11-12 (all science subjects)",type:"Books",free:true},
+      {name:"IIT JAM Previous Papers",type:"Practice",free:true},
+      {name:"Khan Academy / MIT OpenCourseware",type:"Online Learning",free:true},
+      {name:"Kaggle (Data Science)",type:"Platform",free:true},
+      {name:"TIFR/IISc Summer Program",type:"Research Internship",free:true},
+    ],
+    warnings:["BSc from unknown colleges with low CGPA severely limits MSc options","IIT JAM is competitive — 40,000 applicants for ~1,500 IIT MSc seats","Don't let 'job pressure' force you into service roles if research is your passion — stipends exist","Data Science is now accessible to BSc Maths/Stats students — don't ignore this pathway"],
+  },
+
+  /* ── UG Student ── */
+  "sug_general": {
+    headline:"College to Career — Your 3-Year Execution Blueprint",
+    summary:"College is where potential becomes reality. These 3 years determine your first job, your network, and your career trajectory. Here's exactly how to use them.",
+    timeline:"Based on your current year",
+    difficulty:"Intermediate",
+    salaryRange:"Depends on field — Tech: ₹6-25 LPA | Management: ₹8-20 LPA | Core: ₹4-10 LPA",
+    topSkills:["Domain Technical Skills","Communication","Networking","Problem Solving","Portfolio Building"],
+    phases:[
+      {id:1,title:"1st Year — Foundation & Exploration",duration:"Year 1",focus:"Explore, build habits, and start early",
+       actions:["Maintain 7.5+ CGPA — companies do have cutoffs (most require 60-65% minimum)","Join 2-3 clubs: Technical, Cultural, and Sports — all three matter for personality","Start learning industry tools: Excel for everyone; Python/coding for tech students","Attend guest lectures, alumni talks — even if boring — build network habit","Read about your industry: Tech → HN/TechCrunch; Finance → Economic Times; Management → HBR"],
+       milestone:"End of Year 1: 7.5+ CGPA + 2 club memberships + 1 online certification"},
+      {id:2,title:"2nd Year — Skill Building & Internship",duration:"Year 2",focus:"Get your first internship — this changes everything",
+       actions:["Internshala, LinkedIn, AngelList — apply to 50 internships in June-July","Don't wait for the 'perfect' internship — any experience beats none","Technical students: 150+ LeetCode + 2 projects on GitHub by end of Year 2","Non-technical: 1 internship in marketing/finance/HR + Google Analytics/Excel certification","Start building LinkedIn profile seriously — recruiters DO check students' profiles"],
+       milestone:"1 internship completed with recommendation letter + 2 portfolio pieces"},
+      {id:3,title:"3rd Year — Placement Preparation",duration:"Year 3",focus:"All-out placement prep while maintaining CGPA",
+       actions:["Technical: DSA prep (300 LeetCode) + system design basics + mock interviews","MBA aspirants: CAT prep from June — need 95+ percentile for IIM ABC","Banking aspirants: IBPS PO prep from June, SBI PO in Oct","Government job aspirants: Choose one exam, dedicate 4 hours/day to it","Non-tech management: Case study practice (BCG, McKinsey frameworks) for consulting"],
+       milestone:"Job offer or exam cleared before final semester ends"},
+      {id:4,title:"Placements & Beyond",duration:"Final 6 months",focus:"On-campus + off-campus + negotiation",
+       actions:["Apply to every on-campus company — selection is volume game initially","Off-campus: LinkedIn referral messages to 30 people/week actually work","Never accept first offer without negotiation — always ask for 10-15% more","Startup offers: Lower CTC but ESOPs and growth can beat big companies in 3 years","Have Plan B ready: Higher studies (GATE/GRE/CAT) if placement doesn't work"],
+       milestone:"Job offer accepted with CTC 20% above your city's average for your field"},
+    ],
+    resources:[
+      {name:"LinkedIn Learning",type:"Professional Skills Platform",free:false},
+      {name:"Internshala",type:"Internship Portal",free:true},
+      {name:"LeetCode (for tech)",type:"DSA Platform",free:true},
+      {name:"Coursera (Financial Aid available)",type:"Online Courses",free:true},
+      {name:"GlassDoor",type:"Company Research & Salary Data",free:true},
+      {name:"YouTube — specific skill channels",type:"Free Learning",free:true},
+    ],
+    warnings:["CGPA alone won't get you placed — skills + internship + network are equally critical","Starting internship search in final year is too late — industry expects Year 2 internship","Never compare your journey to others — your competitor is yourself, not your classmate","MBA right after UG is rarely optimal — 2-3 years of work experience makes MBA ROI 2x better"],
+  },
+
+  /* ── Parent — Child guidance ── */
+  "par_general": {
+    headline:"A Parent's Complete Guide to Your Child's Career",
+    summary:"You want the best for your child. This roadmap gives you clear, ROI-driven, honest guidance — from stream selection to college admission — without the noise.",
+    timeline:"Ongoing based on child's age/stage",
+    difficulty:"Intermediate",
+    salaryRange:"Varies widely by field — we'll give you the numbers for each path",
+    topSkills:["Understanding Modern Careers","Financial Planning","Emotional Support","Research","Patience"],
+    phases:[
+      {id:1,title:"Understanding the Landscape — Unlearn & Relearn",duration:"1 month",focus:"Learn what's actually changed in careers since you studied",
+       actions:["Engineering ≠ just IT anymore: AI, Data Science, Robotics, Cybersecurity are booming","Medical ≠ just MBBS: Biotech, Pharma, Public Health, Hospital Management are strong","Arts ≠ low salary: Law (NLU grads earn ₹15-25L Day 1), Design, Journalism, Psychology all pay well","Commerce ≠ just CA: Finance, Consulting, Startup (Product/Operations) roles are high-paying","Research new-age careers: Data Scientist, Product Manager, UX Designer, YouTuber, Game Developer"],
+       milestone:"Can explain 5 non-traditional careers and their salary ranges confidently"},
+      {id:2,title:"Know Your Child's Profile",duration:"1-2 months",focus:"Understand strengths, not just marks",
+       actions:["Aptitude test: Attempt free career aptitude tests (Holland Code, MBTI, CareerMap India)","Talk to your child 30 minutes weekly about what excites them — genuinely listen","Watch what they do voluntarily (code, draw, write, debate) — that's the signal","Don't confuse 'topped in Science' with 'loves Science' — they're different","Consult a school counselor or pay ₹2,000-5,000 for a professional career assessment"],
+       milestone:"Clear sense of child's top 3 interest areas and top 3 strengths"},
+      {id:3,title:"Class 10 → Stream Selection",duration:"April-June",focus:"Make the stream decision with data, not emotion",
+       actions:["PCM → Engineering (JEE): Needs strong Math + logical thinking; JEE is tough","PCB → Medical (NEET): Needs Biology love + memorization + 5-6 year patience","Commerce → CA/MBA/Law: Versatile, needs Accountancy interest + math comfort","Arts/Humanities → UPSC/Law/Design/Psych: Strong writers, thinkers, communicators","Diploma → Trades, Polytechnic: Excellent if child is hands-on, practical, not exam-oriented"],
+       milestone:"Stream chosen based on child's actual strengths, not peer/family pressure"},
+      {id:4,title:"College Selection — India vs Abroad",duration:"Ongoing from Class 11",focus:"Research and financial planning for college admission",
+       actions:["India Tier-1: IIT/AIIMS/NLU/IIM = ₹2-12L total fees — best ROI in world","India Tier-2: NIT/BITS/State med colleges = ₹5-25L fees — solid outcomes","India private: Varies wildly — check placement data rigorously before paying ₹40-80L","Abroad — USA: ₹1-2 Cr total; starting salary $70-100K — ROI positive if scholarship","Abroad — Canada: ₹80-120L; PR possibility after 2 years — good long-term bet","Abroad — Germany: Nearly free tuition + ₹40-50L living cost — excellent value"],
+       milestone:"Financial plan ready + college shortlist of 10-15 institutions"},
+    ],
+    resources:[
+      {name:"Shiksha.com",type:"India College Research Platform",free:true},
+      {name:"CollegeDunia",type:"India College Data",free:true},
+      {name:"QS World University Rankings",type:"Global Rankings",free:true},
+      {name:"Studyabroad.com",type:"Abroad Admission Guide",free:true},
+      {name:"ICAI.org",type:"CA Career Info",free:true},
+    ],
+    warnings:["Never choose a stream/college because 'all their friends are going there' — it's career suicide","₹60L private engineering or medical may have 40% unplaced students — always check placement data","Pushing a Science student who wants Arts into PCM creates burnout, mental health issues, and failure","The best investment is understanding your child's strengths — one career counselling session is worth ₹5,000"],
+  },
+
+  /* ── Working Professional — Career Switch ── */
+  "pro_switch": {
+    headline:"Your Strategic Career Transition Roadmap",
+    summary:"Switching careers as a professional is one of the best decisions you can make — if done right. The key is leveraging your existing experience as an asset, not a liability.",
+    timeline:"12-24 months for full transition",
+    difficulty:"Intermediate to Advanced",
+    salaryRange:"Salary jump possible: 20-100% depending on target field and preparation quality",
+    topSkills:["Target Field Technical Skills","Networking","Personal Branding","Portfolio Building","Interview Preparation"],
+    phases:[
+      {id:1,title:"Audit & Target Identification",duration:"1-2 months",focus:"Get ruthlessly clear on WHERE you're going and WHY",
+       actions:["List what you loved and hated in every job — patterns reveal your real strengths","Research 3 target roles: Day in the life, required skills, typical salary (Glassdoor, Levels.fyi)","Identify your transferable skills: Every role has transferable value to something else","Talk to 5 people already in your target field — LinkedIn cold messages work (80% respond)","Assess financial runway: How many months can you survive during transition? Plan for 12 months"],
+       milestone:"Target role clearly identified with a 1-page skills gap analysis completed"},
+      {id:2,title:"Skill Bridge Building",duration:"3-6 months",focus:"Close the skill gap without quitting your current job",
+       actions:["Learn target skills evenings/weekends — 2 hours/day is enough to progress","Tech switch: Coding (Udemy courses) + DSA (LeetCode 200 problems) + 2 projects","Product Management: PM school (Exponent, Cohort-based) + case study practice","Data Science: Kaggle + Python + SQL + 2 Kaggle competitions + 1 portfolio project","Marketing/Digital: Google Certifications (free) + HubSpot (free) + internship/freelance project"],
+       milestone:"Portfolio of 2-3 projects in target field + 1 relevant certification"},
+      {id:3,title:"Experience Creation Without Quitting",duration:"3-6 months",focus:"Build real, citable experience in the new field while employed",
+       actions:["Freelance: Upwork, Fiverr, or direct clients for your new skill — even 1 paid project counts","Internal pivot: Find projects in your company related to target field — volunteer for them","Open source: Contribute to GitHub open source projects (for tech transition)","Side project: Build a product, content channel, or service using new skills","Networking events: Attend 2 meetups/month in your target field — this leads to referrals"],
+       milestone:"1 paid project OR internal project completed in target field; LinkedIn profile updated"},
+      {id:4,title:"Active Job Search & Transition",duration:"3-6 months",focus:"Target, apply, network, negotiate",
+       actions:["Referrals generate 10x more interviews than cold applications — exhaust network first","LinkedIn: Post 2x/week about your transition journey — recruiters notice active profiles","Resume: Lead with transferable achievements, not old job titles, in new field applications","Interview prep: 50 practice interviews via Pramp (free) or mock with friends","Negotiate: Career switchers often under-value themselves — market rate research is mandatory"],
+       milestone:"Job offer in target field accepted — transition complete"},
+    ],
+    resources:[
+      {name:"LinkedIn Premium (1 month free trial)",type:"Job Search + Networking",free:true},
+      {name:"Udemy / Coursera",type:"Skill Courses",free:false},
+      {name:"Levels.fyi",type:"Tech Salary Data",free:true},
+      {name:"Pramp.com",type:"Free Mock Interviews",free:true},
+      {name:"Kaggle (for Data Science)",type:"Competitions + Learning",free:true},
+      {name:"Exponent (PM Prep)",type:"Product Management Course",free:false},
+    ],
+    warnings:["Quitting before securing a new job is very risky — transition while employed unless impossible","Skill courses ≠ job experience — you MUST build projects or freelance to prove competence","Career switches take 12-24 months realistically — anyone promising 3-month switch is selling hope","Your current experience IS valuable in the new field — don't present yourself as a complete beginner"],
+  },
+
+  /* ── Working Professional — Upskill/Growth ── */
+  "pro_upskill": {
+    headline:"Senior Track — Accelerate Your Career Growth",
+    summary:"You have experience. Now it's time to convert it into a leadership role, salary jump, or international opportunity. Here's your structured plan to get there.",
+    timeline:"6-18 months to next level",
+    difficulty:"Intermediate",
+    salaryRange:"Expected jump: 30-60% salary increase | Leadership roles: 2-3x current CTC",
+    topSkills:["Leadership","Strategic Thinking","Executive Communication","Domain Depth","Networking"],
+    phases:[
+      {id:1,title:"Position Audit & Goal Setting",duration:"1 month",focus:"Know exactly where you are and where you want to be",
+       actions:["Write your current achievements in STAR format — this becomes your interview story","Research: What does the next level above you earn? (Glassdoor, LinkedIn Salary, Payscale)","Identify the 3 most respected people in your field — study their career paths","Ask your manager: 'What would I need to demonstrate to be considered for a promotion?' — directly","Read: 'The First 90 Days' by Watkins + 'So Good They Can't Ignore You' by Newport"],
+       milestone:"Written career audit + specific next-level role identified with salary range"},
+      {id:2,title:"High-Value Skill Acquisition",duration:"3-6 months",focus:"Learn what creates disproportionate value at senior levels",
+       actions:["Data literacy: Everyone must know SQL + Excel pivot tables + Power BI basics","AI tools: ChatGPT, Claude, Gemini — prompt engineering; AI-augmented workers earn 20-30% more","Leadership: 'Harvard ManageMentor' online courses (if company pays) or read Drucker, HBR","Certifications that matter: AWS/GCP (tech), CFA Level 1 (finance), PMP (project management)","Public speaking: Join Toastmasters (₹3,000/year) — this one skill changes careers"],
+       milestone:"2 high-value certifications + demonstrable AI tool proficiency"},
+      {id:3,title:"Visibility & Personal Brand",duration:"3-6 months",focus:"Get known inside and outside your company",
+       actions:["Internal visibility: Volunteer for cross-functional projects, present in all-hands meetings","LinkedIn: 500+ connections relevant to your field + 2 posts per week","Thought leadership: Write 1 article per month on your domain — Medium, LinkedIn articles","Speak at industry events — even local meetups — positions you as an expert","Mentor 1-2 junior people — creates goodwill, leadership proof, and network"],
+       milestone:"Speaking gig completed + 2 published articles + internal visibility increased"},
+      {id:4,title:"Promotion or New Opportunity",duration:"3-6 months",focus:"Either negotiate promotion or capture external opportunity",
+       actions:["Internal promotion: Present your case with data — revenue impact, team size, project scope","External job search: Target companies 1-2 tiers above current employer","Salary negotiation: Research market + have competing offer ideally + anchor high first","FAANG aspirants: 300+ LeetCode + system design practice + referral from inside","MBA: IIM CAT 95%+ for top schools; consider ISB (work-ex preferred, 1 year)"],
+       milestone:"Promotion received OR new job offer with 30%+ salary increase"},
+    ],
+    resources:[
+      {name:"Harvard Business Review",type:"Leadership & Strategy Content",free:false},
+      {name:"Levels.fyi",type:"Compensation Research",free:true},
+      {name:"Coursera (Professional Certs)",type:"Skill Courses",free:false},
+      {name:"Toastmasters International",type:"Public Speaking Club",free:false},
+      {name:"LinkedIn Premium",type:"Job Search + Learning",free:false},
+      {name:"LeetCode (for FAANG prep)",type:"DSA Practice",free:true},
+    ],
+    warnings:["Loyalty rarely pays — external job offers consistently yield 20-30% higher salaries than internal promotions","MBA from non-IIM is often not worth ₹15-25L cost — research actual placement data carefully","Visibility within company matters as much as performance — quiet performers get passed over","FAANG interview prep is 6+ months of serious daily work — don't underestimate it"],
+  },
+
+  /* ── Extra roadmaps for UG dropdown options ── */
+  sug_fullstack:{
+    headline:"Full Stack Developer in 12 Months",
+    summary:"Full stack development is one of the highest-demand skills in India right now. The MERN/MEAN stack path from zero to job-ready is well-defined and achievable in 12 months with focused effort.",
+    timeline:"10-14 months", difficulty:"Intermediate", salaryRange:"₹6-18 LPA fresher",
+    topSkills:["HTML/CSS/JS","React.js","Node.js + Express","MongoDB","Git & Deployment"],
+    phases:[
+      {id:1,title:"Web Fundamentals",duration:"2 months",focus:"HTML, CSS, Vanilla JS",actions:["Complete The Odin Project HTML/CSS module","Build 3 static websites (portfolio, landing page, clone)","Learn responsive design & Flexbox/Grid","JavaScript basics: DOM, events, fetch API"],milestone:"3 complete responsive websites on GitHub"},
+      {id:2,title:"Frontend — React",duration:"2 months",focus:"React ecosystem",actions:["Complete React docs + Scrimba React course","Build 2 React apps (Todo, Weather app)","State management: useState, useEffect, Context","Learn React Router, basic TypeScript"],milestone:"2 deployed React projects on Vercel"},
+      {id:3,title:"Backend — Node + DB",duration:"2.5 months",focus:"Server, REST API, MongoDB",actions:["Node.js + Express REST API from scratch","MongoDB Atlas + Mongoose ODM","Authentication: JWT, bcrypt, sessions","Deploy backend on Railway/Render"],milestone:"Full CRUD REST API deployed and working"},
+      {id:4,title:"Full Stack Projects",duration:"2.5 months",focus:"2-3 portfolio projects",actions:["Build full stack app #1: E-commerce / Blog","Build full stack app #2: Real-time chat (Socket.io)","Add auth, payments (Razorpay), file upload","Write README, clean GitHub, deploy on Vercel"],milestone:"3 full stack projects live with custom domain"},
+      {id:5,title:"Job Hunt & DSA",duration:"2 months",focus:"Placements & interviews",actions:["DSA: 100 LeetCode easy/medium problems","System design basics for interviews","Apply on LinkedIn, Naukri, Wellfound — 20 apps/week","Mock interviews on Pramp/interviewing.io"],milestone:"First full stack job offer ₹6L+"},
+    ],
+    resources:[
+      {name:"The Odin Project",type:"Free Curriculum",free:true},
+      {name:"Scrimba — React Course",type:"Interactive Course",free:true},
+      {name:"Traversy Media (YouTube)",type:"YouTube Channel",free:true},
+      {name:"roadmap.sh/full-stack",type:"Visual Roadmap",free:true},
+      {name:"Udemy — MERN Stack (Colt Steele)",type:"Paid Course",free:false},
+      {name:"LeetCode",type:"DSA Practice Platform",free:true},
+    ],
+    warnings:["Skipping DSA entirely will kill your interview chances — 100 problems minimum","Tutorial hell is real — build projects, don't just watch videos","Bootcamps charging ₹2-5L are often not worth it — free resources are equal quality","3 strong projects beat 10 weak ones on your resume"],
+  },
+  sug_data:{
+    headline:"Data Science Career — From Student to Analyst",
+    summary:"Data Science roles in India are exploding — analytics, ML, and AI. The path requires Python, statistics, and strong project work. Realistic first salary: ₹6-15 LPA.",
+    timeline:"12-18 months", difficulty:"Advanced", salaryRange:"₹6-15 LPA fresher",
+    topSkills:["Python","Pandas & NumPy","Machine Learning (sklearn)","SQL","Data Visualization"],
+    phases:[
+      {id:1,title:"Python & Statistics",duration:"2 months",focus:"Programming + Math foundation",actions:["Python: variables, functions, OOP, file I/O","Statistics: mean, std, probability, distributions","Pandas, NumPy, Matplotlib basics","Complete Kaggle Python + Pandas micro-courses (free)"],milestone:"5 data analysis notebooks on Kaggle"},
+      {id:2,title:"Machine Learning",duration:"3 months",focus:"Core ML algorithms",actions:["Andrew Ng ML Specialization (Coursera — audit free)","Scikit-learn: regression, classification, clustering","Feature engineering, cross-validation, model evaluation","Build 2 ML projects: house price prediction, churn prediction"],milestone:"2 complete ML projects on GitHub"},
+      {id:3,title:"SQL + BI Tools",duration:"1.5 months",focus:"Data analyst skills",actions:["SQL: joins, subqueries, window functions","Mode Analytics or LeetCode SQL practice","Tableau Public / Power BI / Google Looker Studio","Build a dashboard project from a real dataset"],milestone:"SQL cert + 1 live Tableau dashboard"},
+      {id:4,title:"Deep Learning + NLP",duration:"2 months",focus:"Advanced ML",actions:["TensorFlow/Keras or PyTorch basics","NLP: text classification, sentiment analysis","Hugging Face models — try one project","Kaggle competitions — submit at least 2"],milestone:"Top 30% in a Kaggle competition"},
+      {id:5,title:"Portfolio & Jobs",duration:"2 months",focus:"Resume, GitHub, applications",actions:["5 end-to-end projects in GitHub with READMEs","Kaggle profile — at least Expert tier","Apply on Naukri, LinkedIn, Analytics Vidhya jobs","Crack SQL + Python rounds in campus/off-campus"],milestone:"Data Analyst / Junior DS offer ₹6L+"},
+    ],
+    resources:[
+      {name:"Kaggle Free Courses",type:"Free Platform",free:true},
+      {name:"Andrew Ng ML Specialization",type:"Coursera (audit free)",free:true},
+      {name:"StatQuest (YouTube)",type:"YouTube Channel",free:true},
+      {name:"Codebasics (YouTube)",type:"YouTube Channel",free:true},
+      {name:"Fast.ai",type:"Free Deep Learning Course",free:true},
+      {name:"Udemy — Data Science Bootcamp (365 DS)",type:"Paid Course",free:false},
+    ],
+    warnings:["Without strong math (stats/linear algebra), ML becomes copy-paste — learn the WHY","Many 'data science' jobs are actually data analyst roles — manage expectations","A Kaggle Expert rank + 5 projects beats a ₹50K bootcamp certificate","Python alone is not enough — SQL is equally tested in every data interview"],
+  },
+  sug_pm:{
+    headline:"Break Into Product Management — No MBA Needed",
+    summary:"PM roles in India are highly competitive and mostly come from internal transitions or strong internship networks. You don't need an MBA — you need product sense and execution proof.",
+    timeline:"12-18 months", difficulty:"Highly Competitive", salaryRange:"₹8-20 LPA (APM/PM fresher)",
+    topSkills:["Product Thinking","SQL & Data Analysis","Wireframing (Figma)","User Research","Agile / Scrum"],
+    phases:[
+      {id:1,title:"PM Fundamentals",duration:"2 months",focus:"Product thinking & frameworks",actions:["Read: Inspired by Marty Cagan + Cracking the PM Interview","Learn CIRCLES, RICE, Jobs-to-be-done frameworks","Tear down 5 apps: identify problems, write PRDs","Study PM job descriptions — understand what companies want"],milestone:"3 product teardowns + 2 PRDs published on Medium"},
+      {id:2,title:"Technical + Data Skills",duration:"2 months",focus:"SQL, metrics, analytics",actions:["Learn SQL — Mode Analytics free course","Google Analytics / Mixpanel basics","Understand APIs — how products talk to backends","Set up personal analytics dashboard"],milestone:"SQL proficient — pass technical PM screen"},
+      {id:3,title:"Design & Prototyping",duration:"1.5 months",focus:"Figma + user research",actions:["Figma basics — wireframe any 2 app features","Conduct 5 user interviews for a product idea","A/B testing concepts — how to run experiments","Learn UX principles (Don't Make Me Think)"],milestone:"Figma prototype of a feature you redesigned"},
+      {id:4,title:"PM Internship / Project",duration:"3 months",focus:"Real PM experience",actions:["Apply aggressively for APM / PM internships","Volunteer as PM for a startup / NGO tech project","Join a hackathon as the PM (not developer)","Build and ship a side product (even a Notion template)"],milestone:"1 PM internship or shipped side product with users"},
+      {id:5,title:"Interview Prep & Apply",duration:"2 months",focus:"PM interviews & offers",actions:["Practice product design, estimation, analytical questions","Prepare for case studies: growth, launch, metrics","Apply: Razorpay, CRED, Meesho, Flipkart APM programs","Leverage LinkedIn — connect with PMs, ask for referrals"],milestone:"PM/APM offer at a product company"},
+    ],
+    resources:[
+      {name:"Inspired — Marty Cagan",type:"Book",free:false},
+      {name:"Exponent PM Interview Course",type:"Platform (free trial)",free:true},
+      {name:"Lenny's Newsletter",type:"Free Newsletter",free:true},
+      {name:"PM School India",type:"Community + Resources",free:true},
+      {name:"Mode Analytics SQL",type:"Free SQL Course",free:true},
+    ],
+    warnings:["Most APM programs prefer CS/engineering backgrounds — highlight technical skills","'I love products' is not a differentiator — prove it with real artifacts and projects","MBA is NOT required but IIM/ISB MBA dramatically opens PM doors at top companies","Networking matters more than resumes for PM roles — LinkedIn outreach is essential"],
+  },
+  sug_design:{
+    headline:"UI/UX Design Career — Portfolio First",
+    summary:"UI/UX design is a portfolio-first field. Companies don't care about degrees — they want to see your process, thinking, and output. First job timeline: 8-14 months.",
+    timeline:"8-14 months", difficulty:"Intermediate", salaryRange:"₹4-12 LPA fresher",
+    topSkills:["Figma","User Research","Design Systems","Prototyping","Visual Design"],
+    phases:[
+      {id:1,title:"Design Foundations",duration:"1.5 months",focus:"Visual design + Figma",actions:["Google UX Design Certificate (Coursera — audit free)","Figma: components, auto layout, prototyping","Typography, colour theory, spacing fundamentals","Daily UI challenge — 30 days"],milestone:"Figma proficient — 10 UI screens designed"},
+      {id:2,title:"UX Process & Research",duration:"2 months",focus:"User research + case studies",actions:["User interviews, surveys, affinity mapping","User flows, information architecture, wireframes","Usability testing — test your own designs on 5 users","Build case study #1: redesign a broken app"],milestone:"1 complete UX case study with research + solution"},
+      {id:3,title:"Portfolio Projects",duration:"2.5 months",focus:"3 portfolio case studies",actions:["Case study #2: design a feature from scratch for a real product","Case study #3: mobile app for a problem you identify","Document process: research → wireframe → high-fi → test","Publish portfolio on Behance + personal site (Framer/Webflow)"],milestone:"3 case studies live on portfolio site"},
+      {id:4,title:"Industry Skills",duration:"1.5 months",focus:"Design systems + collaboration",actions:["Learn design tokens, component libraries","Understand dev handoff — Zeplin or Figma Dev Mode","Basic HTML/CSS helps — understand constraints","Contribute to open source design system on GitHub"],milestone:"Design system component library built in Figma"},
+      {id:5,title:"Job Hunt",duration:"1.5 months",focus:"Applications + interviews",actions:["Apply on LinkedIn, Internshala, AngelList / Wellfound","Cold email designers at companies you love","Prepare for portfolio review + design challenge rounds","Join design communities: Dribbble, Figma Community"],milestone:"First design role or internship offer"},
+    ],
+    resources:[
+      {name:"Google UX Design Certificate",type:"Coursera (audit free)",free:true},
+      {name:"Figma (Free tier)",type:"Design Tool",free:true},
+      {name:"Refactoring UI (book)",type:"Book",free:false},
+      {name:"DesignCourse (YouTube)",type:"YouTube",free:true},
+      {name:"Mobbin — UI inspiration",type:"Reference Platform",free:true},
+    ],
+    warnings:["Dribbble-pretty work with no UX process will not get you hired — document your thinking","3 deep case studies beat 20 shallow screens","Don't wait until portfolio is 'perfect' — apply when you have 2-3 solid pieces","Internship pays low but gives mentorship — worth it in year 1"],
+  },
+  sug_abroad:{
+    headline:"Masters Abroad — MS or MBA from Top Universities",
+    summary:"Studying abroad (US, Canada, UK, Germany) is the single biggest salary multiplier for Indian graduates. The key: start 18 months before your target intake and treat the application like a product launch.",
+    timeline:"18-24 months (from start to visa)", difficulty:"Highly Competitive", salaryRange:"$70K-120K starting abroad",
+    topSkills:["GRE/GMAT","English (IELTS/TOEFL)","SOP Writing","Research / Work Experience","University Shortlisting"],
+    phases:[
+      {id:1,title:"Eligibility & Profile Building",duration:"3 months",focus:"Scores, research, timeline",actions:["Decide: MS (technical) vs MBA (management) — salary, ROI, cost","Map shortlist: 3 reach, 3 match, 3 safe universities","GRE/GMAT target score — research your target programs","Strengthen undergrad CGPA — no backlogs, active projects"],milestone:"Shortlist of 9 universities with admission criteria mapped"},
+      {id:2,title:"Test Preparation",duration:"4 months",focus:"GRE/GMAT + IELTS/TOEFL",actions:["GRE: 315+ target (Magoosh + Manhattan 5lb book)","TOEFL 100+ or IELTS 7.0+ required","2 full-length mocks per week from month 2","Register for exams — book slots 2 months in advance"],milestone:"GRE 315+ and TOEFL 100+ scores achieved"},
+      {id:3,title:"Applications & SOP",duration:"4 months",focus:"Essays, LORs, applications",actions:["Draft SOP: research each university's program deeply","LOR: approach professors/managers 3 months in advance","Resume: 1 page, quantified achievements, ATS-friendly","Apply by Dec 1 for January intake, Aug 1 for September intake"],milestone:"Applications submitted to all 9 universities"},
+      {id:4,title:"Financial Planning",duration:"Parallel",focus:"Scholarships, loans, planning",actions:["Education loan: SBI, HDFC Credila, Prodigy Finance","University scholarships: check department fellowships","GTA/GRA positions for MS (covers tuition + stipend)","Part-time work: US allows 20hrs/week on campus"],milestone:"Loan/scholarship secured, I-20 / CAS received"},
+      {id:5,title:"Visa & Pre-Departure",duration:"2 months",focus:"F-1/Student visa + prep",actions:["US F-1 visa: DS-160, SEVIS fee, embassy interview","Prepare: financial docs, admit letter, bank statements","Connect with seniors at your university via LinkedIn","Book accommodation — university housing or shared apartment"],milestone:"Visa stamped — ready to fly"},
+    ],
+    resources:[
+      {name:"Magoosh GRE",type:"Paid Prep Platform",free:false},
+      {name:"Yocket",type:"Free Abroad Guidance Platform",free:true},
+      {name:"GyanDhan (Loans)",type:"Education Loan Comparison",free:true},
+      {name:"Reddit r/GRE + r/gradadmissions",type:"Community",free:true},
+      {name:"ETS Official GRE Materials",type:"Official Practice",free:false},
+    ],
+    warnings:["Germany / Canada are cheaper but job markets are tougher post-study for non-EU/non-PR holders","US STEM OPT gives 3 years to find H-1B — factor this into ROI calculation","Low CGPA (below 7.5) significantly narrows US top-50 chances — compensate with research/projects","Average MS in US costs ₹50-80L all-in — model the 5-year ROI before committing"],
+  },
+  sug_upsc:{
+    headline:"UPSC Civil Services — 3 Year Strategic Plan",
+    summary:"UPSC is India's toughest exam — but it rewards systematic preparation over brilliance. The key is selecting the right optional, building consistent daily habits, and managing the emotional marathon.",
+    timeline:"2-4 years", difficulty:"Highly Competitive", salaryRange:"IAS/IPS: Grade Pay ₹5400+",
+    topSkills:["Current Affairs","NCERT Foundation","Answer Writing","Optional Subject","Interview Personality"],
+    phases:[
+      {id:1,title:"Foundation",duration:"4 months",focus:"NCERT + syllabus mapping",actions:["Read NCERT Class 6-12: History, Geography, Polity, Economics","Download UPSC syllabus — map every topic","Newspaper: The Hindu / Indian Express — daily 1 hour","Choose optional subject by month 3 (pick your graduation subject)"],milestone:"All NCERTs complete + optional chosen"},
+      {id:2,title:"Standard Books",duration:"5 months",focus:"Core reading for Prelims",actions:["Polity: Laxmikanth","Economy: Ramesh Singh + NCERT","History: Spectrum Modern + Bipin Chandra","Geography: GC Leong + NCERT","Science & Tech: Vision IAS notes"],milestone:"First prelims mock test — attempt 100 questions"},
+      {id:3,title:"Prelims Crash + Attempt",duration:"3 months",focus:"MCQ practice + revision",actions:["10 full mock tests before Prelims","CSAT Paper 2 — do NOT neglect (qualifying but crucial)","PYQ analysis — last 10 years is mandatory","Current affairs: last 12 months revision"],milestone:"UPSC Prelims qualified"},
+      {id:4,title:"Mains Preparation",duration:"6 months",focus:"Answer writing + optional deep dive",actions:["GS1-GS4 answer writing practice — 3 answers/day","Optional: standard books + PYQ analysis","Essay writing — practice 2 per week","Join a test series: Insights IAS, Forum IAS, Vision IAS"],milestone:"All 9 Mains papers attempted with confidence"},
+      {id:5,title:"Interview (Personality Test)",duration:"2 months",focus:"DAF + mock interviews",actions:["Fill DAF carefully — every line will be questioned","Mock interviews: ForumIAS, Chanakya IAS, local clubs","Read your home state thoroughly — district, culture, issues","Stay calm — IAS board tests personality, not just knowledge"],milestone:"Final selection & training at LBSNAA"},
+    ],
+    resources:[
+      {name:"NCERTs (all subjects)",type:"Free — ncert.nic.in",free:true},
+      {name:"Insights IAS",type:"Free Current Affairs + Test Series",free:true},
+      {name:"Vision IAS",type:"Paid Coaching / Notes",free:false},
+      {name:"ForumIAS",type:"Free Community + Answer Writing",free:true},
+      {name:"Laxmikanth — Indian Polity",type:"Essential Book",free:false},
+    ],
+    warnings:["Average successful candidate takes 3.5 attempts — prepare for a multi-year marathon","Coaching is NOT mandatory — many toppers are self-study with good test series","Optional subject is 500 marks — wrong choice costs the exam, research carefully","Mental health support system is critical — UPSC attrition is high from burnout, not lack of intelligence"],
+  },
+  sug_startup:{
+    headline:"Build Your Startup — From Idea to First ₹1 Lakh Revenue",
+    summary:"India has the world's 3rd largest startup ecosystem. The best time to start is while you're in college — low expenses, access to peers, and university resources. Focus on solving a real problem, not building features.",
+    timeline:"12-24 months", difficulty:"Advanced", salaryRange:"Variable — focus on learning + traction",
+    topSkills:["Problem Validation","MVP Building","Customer Development","Fundraising Basics","Growth Hacking"],
+    phases:[
+      {id:1,title:"Idea Validation",duration:"1.5 months",focus:"Find a real problem to solve",actions:["Interview 20 potential customers — find pain points","Do NOT build anything yet — validate first","Research existing solutions: why are they failing?","Write a 1-page problem statement with evidence"],milestone:"10 people say 'I need this and I'd pay for it'"},
+      {id:2,title:"MVP (Minimum Viable Product)",duration:"2 months",focus:"Ship in 8 weeks",actions:["No-code first: Glide, Bubble, Webflow, Notion","If code needed: MERN stack or hire a co-founder developer","Focus on 1 core feature only — resist feature creep","Get 10 beta users who are NOT your friends or family"],milestone:"MVP live with 10 real users giving feedback"},
+      {id:3,title:"First Revenue",duration:"3 months",focus:"₹1 Lakh ARR",actions:["Charge from day 1 — free users give no signal","B2B is easier than B2C for first revenue in India","Cold email 100 potential clients with a clear offer","Iterate weekly based on user feedback — ship every Friday"],milestone:"₹1 Lakh revenue milestone (proof of willingness to pay)"},
+      {id:4,title:"Growth + Team",duration:"4 months",focus:"Scale what works",actions:["Double down on ONE growth channel that's working","Hire first employee only when revenue can pay them","Apply: IIM incubators, T-Hub, NSRCEL, CIIE — free resources","Track North Star Metric religiously (MAU, revenue, retention)"],milestone:"Consistent month-on-month revenue growth"},
+      {id:5,title:"Fundraising (Optional)",duration:"3 months",focus:"Angel / pre-seed round",actions:["Build a 10-slide deck: problem, solution, market, traction, team, ask","Apply: Y Combinator, Antler, Surge by Sequoia","Angel investors: LinkedIn outreach to Indian angels","Revenue is your best fundraising tool — show it"],milestone:"₹25L-1Cr pre-seed raised OR sustainable on revenue"},
+    ],
+    resources:[
+      {name:"The Mom Test (book)",type:"Essential Reading",free:false},
+      {name:"Y Combinator Startup School",type:"Free Online Program",free:true},
+      {name:"iSPIRT / iSPIRT Playbooks",type:"Free Founder Resources",free:true},
+      {name:"Zoho / Razorpay (tools)",type:"Indian SaaS Stack",free:true},
+      {name:"YourStory + Inc42",type:"Indian Startup News",free:true},
+    ],
+    warnings:["Building without validation is the #1 reason startups fail — talk to customers first","Co-founder conflicts kill more startups than bad products — define roles and equity clearly upfront","Don't raise too early — diluting equity at ₹0 revenue is a bad deal","College incubators (IIT/IIM/NIT) offer free space + mentorship — apply even if not from that college"],
+  },
+  sug_finance:{
+    headline:"Finance Career — CA / Investment Banking / CFA",
+    summary:"Finance careers in India split into two tracks: CA (accounting/tax/audit) and IB/markets (investment banking, equity research, trading). Both are prestigious and well-paying — pick based on your personality.",
+    timeline:"2-5 years (CA) / 1-2 years (IB)", difficulty:"Highly Competitive", salaryRange:"CA: ₹7-25 LPA / IB: ₹12-40 LPA",
+    topSkills:["Financial Accounting","Valuation (DCF / Comps)","Excel & Financial Modelling","CFA / CA Foundation","MS Excel + Bloomberg"],
+    phases:[
+      {id:1,title:"Foundation",duration:"2 months",focus:"Accounting + Excel basics",actions:["Financial accounting: assets, liabilities, P&L, cash flow","Excel: VLOOKUP, pivot tables, financial functions","Read: Financial Times / Mint / Economic Times daily","Decide track: CA (longer, safer) vs IB (faster, competitive)"],milestone:"Can read and interpret a company's annual report"},
+      {id:2,title:"CA Route: Foundation + Intermediate",duration:"18 months",focus:"ICAI exams",actions:["CA Foundation: 4 papers — start immediately after 12th/graduation","CA Intermediate: 8 papers in 2 groups","Articleship (3 years): get placed at Big 4 — EY, Deloitte, KPMG, PwC","Practice ICAI mock papers religiously — pass rate is 10-15%"],milestone:"CA Intermediate both groups cleared"},
+      {id:3,title:"IB Route: Skills + Network",duration:"4 months",focus:"Financial modelling + target firms",actions:["Financial modelling: DCF, LBO, merger model (CFI — free course)","CFA Level 1: 300 hours of prep, pass rate 40%","Cold email analysts at Kotak IB, Axis Capital, ICICI Securities","Apply for summer internships at banks + NBFCs"],milestone:"Financial model built from scratch + CFA L1 cleared"},
+      {id:4,title:"Internship & CA Articleship",duration:"6 months",focus:"Real work experience",actions:["Big 4 articleship: audit, tax, advisory rotations","IB internship: pitch decks, company profiles, financial models","CFA Level 2 preparation (more advanced)","Build analyst network — LinkedIn is crucial in finance"],milestone:"Internship completed with PPO conversation initiated"},
+      {id:5,title:"Placement & CA Finals",duration:"6 months",focus:"Full-time role",actions:["CA Finals: toughest 8 papers — 2 groups, pass rate 5-10%","IB placement season: Jan-March for IIM/top college recruiting","Prepare case studies + stock pitches for IB interviews","Negotiate: Big 4 CA pays ₹7-9L; IB fresher ₹12-18L"],milestone:"CA qualification or IB analyst offer ₹12L+"},
+    ],
+    resources:[
+      {name:"ICAI Study Material",type:"Free — official CA material",free:true},
+      {name:"Corporate Finance Institute (CFI)",type:"Financial Modelling (free tier)",free:true},
+      {name:"CFA Institute Materials",type:"Paid CFA prep",free:false},
+      {name:"Wall Street Prep",type:"Paid — IB modelling",free:false},
+      {name:"Investopedia",type:"Free Financial Concepts",free:true},
+    ],
+    warnings:["CA pass rates are brutal (5-15%) — mental resilience is required, not just intelligence","IB roles in India are concentrated in Mumbai — be ready to relocate","CFA alone does not get you an IB job — build modelling skills and network","Big 4 articleship pays ₹20-35K/month — plan finances for the 3-year period"],
+  },
+  sug_marketing:{
+    headline:"Digital Marketing & Growth — India's Fastest Growing Career",
+    summary:"Digital marketing is the easiest career to break into with real skills and a portfolio. India's D2C boom means every brand needs performance marketers, content strategists, and growth hackers.",
+    timeline:"6-10 months", difficulty:"Beginner", salaryRange:"₹3-10 LPA fresher",
+    topSkills:["Meta & Google Ads","SEO","Content Strategy","Analytics (GA4)","Email Marketing"],
+    phases:[
+      {id:1,title:"Fundamentals",duration:"1.5 months",focus:"Core digital marketing concepts",actions:["Google Digital Garage: Fundamentals of Digital Marketing (free cert)","HubSpot Academy: Inbound Marketing, Content Marketing (free)","Set up a personal blog or Instagram — your first test lab","Learn Google Analytics 4 basics"],milestone:"3 free certifications from Google + HubSpot"},
+      {id:2,title:"Paid Advertising",duration:"2 months",focus:"Meta Ads + Google Ads",actions:["Meta Blueprint — free Facebook/Instagram ads certification","Google Ads: search, display, YouTube campaigns","Run a real campaign with ₹500 budget — learn by doing","Understand ROAS, CPM, CPC, CTR — know your metrics"],milestone:"First real paid campaign run with measurable results"},
+      {id:3,title:"SEO & Content",duration:"1.5 months",focus:"Organic growth",actions:["On-page SEO: keyword research, meta tags, content structure","Ahrefs / SEMrush free tools (limited) or Ubersuggest","Write 10 SEO-optimised blog posts on any topic","Learn technical SEO basics: sitemap, page speed, Core Web Vitals"],milestone:"One article ranked on Page 1 Google"},
+      {id:4,title:"Portfolio Projects",duration:"2 months",focus:"Real work = real proof",actions:["Run social media for a local business (free or paid)","Launch a small affiliate marketing experiment","Build a landing page and drive traffic to it — measure conversions","Create a case study: before/after metrics, strategy, results"],milestone:"2 case studies with real numbers in portfolio"},
+      {id:5,title:"Job Hunt",duration:"1.5 months",focus:"Applications",actions:["Apply on Internshala, LinkedIn, Apna — for marketing internships first","Target: D2C brands, startups, agencies (WATConsult, Social Beat)","Show portfolio link in every application — it's your differentiator","Freelance on Fiverr/Upwork while job hunting for income"],milestone:"First marketing role or ₹25K+/month freelance income"},
+    ],
+    resources:[
+      {name:"Google Digital Garage",type:"Free Certification",free:true},
+      {name:"HubSpot Academy",type:"Free Certifications",free:true},
+      {name:"Neil Patel Blog + YouTube",type:"Free SEO & Marketing",free:true},
+      {name:"Meta Blueprint",type:"Free Facebook Ads Cert",free:true},
+      {name:"Internshala Marketing Courses",type:"Paid Certifications",free:false},
+    ],
+    warnings:["'Digital marketing' is very broad — specialize in 1-2 channels to stand out (e.g. SEO + Meta Ads)","Certificates alone mean nothing — employers want proof of results","Agency roles pay less but teach 5x faster than in-house roles","Freelancing income can exceed ₹50K/month within 12-18 months with good clients"],
+  },
+
+};
+
+/* ── Offline roadmap selector function ── */
+function getOfflineRoadmap(profile, form){
+  // form.goal is now a direct ROADMAP_OPTIONS key — use it directly
+  const key = form.goal || "";
+
+  // Direct key lookup — no guessing, no keyword matching
+  if(key && OFFLINE_ROADMAPS[key]) return OFFLINE_ROADMAPS[key];
+
+  // Fallback by profile if key somehow missing
+  const fallbacks={
+    s10:"s10_pcm", s12:"s12_engineering",
+    sug:"sug_general", par:"par_general",
+    pro:"pro_upskill",
+  };
+  return OFFLINE_ROADMAPS[fallbacks[profile]||"sug_general"];
+}
+
+/* ─── DATA ─── */
+const PROFILES=[
+  {id:"s10",icon:"📚",title:"Student — Class 10th",desc:"Stream selection & board prep path"},
+  {id:"s12",icon:"🎓",title:"Student — Class 12th",desc:"College picks, JEE / NEET / Design / Law"},
+  {id:"sug",icon:"🏛️",title:"UG College Student",desc:"Internships, placements, skill roadmap"},
+  {id:"par",icon:"👨‍👩‍👧",title:"Parent",desc:"Guide your child's future wisely"},
+  {id:"pro",icon:"💼",title:"Working Professional",desc:"Career switch, upskill, salary jump"},
+];
+
+const STAGES={
+  s10:["Science — PCM (Engineering track)","Science — PCB (Medical track)","Commerce","Arts / Humanities","Diploma (Polytechnic)","Not decided yet"],
+  s12:["Science — PCM (Engineering/JEE)","Science — PCB (Medical/NEET)","Commerce","Arts / Humanities","BCA / BSc IT track","BSc Sciences track"],
+  sug:["1st Year","2nd Year","3rd Year","Final Year","Just graduated — no job yet"],
+  par:["Child is in Class 8-10","Child is in Class 11-12","Child is in UG College","Child just completed UG","Confused about child's stream"],
+  pro:["0-2 years experience — want to switch","3-5 years experience — want to grow/switch","5-10 years experience — senior role / leadership","10+ years experience — CXO / consulting","Want to upskill & earn more in current field"],
+};
+
+
+/* ─── ROADMAP OPTIONS per profile (dropdown fix — no wrong output) ─── */
+const ROADMAP_OPTIONS={
+  s10:[
+    {label:"🔬 PCM → Engineering (JEE/IIT/NIT)",  key:"s10_pcm"},
+    {label:"🩺 PCB → Medical (NEET/MBBS)",         key:"s10_pcb"},
+    {label:"📊 Commerce → CA / MBA / Finance",      key:"s10_commerce"},
+    {label:"🎨 Arts / Humanities → Law / UPSC / Design", key:"s10_arts"},
+    {label:"🔧 Diploma / Polytechnic Track",        key:"s10_diploma"},
+  ],
+  s12:[
+    {label:"🔬 Engineering → JEE / IIT / NIT / BITS", key:"s12_engineering"},
+    {label:"🩺 Medical → NEET / MBBS / BDS",           key:"s12_mbbs"},
+    {label:"💻 BCA / BSc IT → Software Career",        key:"s12_bca"},
+    {label:"🔭 BSc Sciences → Research / Masters",     key:"s12_bsc"},
+    {label:"📊 Commerce → CA / MBA (use Class 10 path)",key:"s10_commerce"},
+    {label:"⚖️  Arts → Law / UPSC / Design",           key:"s10_arts"},
+  ],
+  sug:[
+    {label:"💻 Full Stack Developer",    key:"sug_fullstack"},
+    {label:"📊 Data Science / AI / ML",  key:"sug_data"},
+    {label:"🎯 Product Management (PM)", key:"sug_pm"},
+    {label:"🎨 UI/UX Design",            key:"sug_design"},
+    {label:"🏦 Finance / Investment Banking / CA", key:"sug_finance"},
+    {label:"📢 Marketing / Growth",      key:"sug_marketing"},
+    {label:"🌍 Masters Abroad (MS/MBA)", key:"sug_abroad"},
+    {label:"🏛️  Civil Services (UPSC)",  key:"sug_upsc"},
+    {label:"🚀 Startup / Entrepreneurship", key:"sug_startup"},
+    {label:"🏢 General Campus Placement",   key:"sug_general"},
+  ],
+  par:[
+    {label:"👶 Child in Class 8-10 — stream guidance",   key:"par_general"},
+    {label:"🎓 Child in Class 11-12 — college strategy", key:"par_general"},
+    {label:"🏛️  Child in UG — placement & career",       key:"par_general"},
+    {label:"🔄 Child confused — need overall direction", key:"par_general"},
+  ],
+  pro:[
+    {label:"💻 Switch to Software / Full Stack Dev",   key:"pro_switch"},
+    {label:"📊 Switch to Data Science / ML",           key:"pro_switch"},
+    {label:"🎯 Switch to Product Management",          key:"pro_switch"},
+    {label:"🏢 FAANG / MNC Preparation",               key:"pro_upskill"},
+    {label:"📈 Salary Jump — Upskill in Current Field",key:"pro_upskill"},
+    {label:"🌍 Move Abroad (Canada / US / UK)",        key:"pro_upskill"},
+    {label:"🚀 Start My Own Business",                 key:"pro_upskill"},
+    {label:"🏦 Switch to Finance / MBA",               key:"pro_upskill"},
+  ],
+};
+
+const MARQUEE_ITEMS=[
+  "Google","Microsoft","Amazon","FAANG Placements","₹35L+ Packages","IIT Guidance","Startup Careers","Career Switches","NEET Roadmap","JEE Strategy","MBA Planning","Canada PR","US Masters","Product Management","Data Science","Full Stack Dev","UI/UX Design","Civil Services",
+];
+
+const FEATURES=[
+  {n:"01",icon:"🧠",title:"AI That Knows India",desc:"Built with deep understanding of JEE, NEET, CAT, UPSC, tier-1 to tier-3 colleges, LPA benchmarks, and the Indian job market.",wide:true},
+  {n:"02",icon:"🗺️",title:"Phase-by-Phase Blueprint",desc:"Not just advice — a structured roadmap with timelines, milestones, and checkpoints."},
+  {n:"03",icon:"💬",title:"24/7 AI Counsellor",desc:"Ask anything, anytime. No appointments needed."},
+  {n:"04",icon:"🌏",title:"India & Abroad",desc:"Compare studying in India vs USA, Canada, UK, Germany, Australia — with ROI analysis.",wide:true},
+  {n:"05",icon:"📊",title:"Salary Benchmarks",desc:"Know exactly what to target and how to get there."},
+  {n:"06",icon:"🔄",title:"Career Switch Support",desc:"Data-driven paths for professionals wanting to pivot."},
+];
+
+const TESTIMONIALS=[
+  {quote:"I was completely lost after Class 12. Compass mapped out my entire engineering journey — from college selection to placement prep. Now I'm at BITS Pilani.",name:"Arjun Mehta",role:"BITS Pilani, CSE",init:"AM",result:"IIT/NIT"},
+  {quote:"As a parent, I had no idea how to guide my daughter. Compass gave me a clear picture of cost, ROI, and which colleges were right for her goals.",name:"Priya Sharma",role:"Parent of UG Student",init:"PS",result:"Parent"},
+  {quote:"Switched from mechanical to SDE role in 14 months following the Compass roadmap. Cracked Razorpay at 28 LPA. This actually works.",name:"Rohit Verma",role:"SDE at Razorpay",init:"RV",result:"₹28 LPA"},
+];
+
+/* ═══════════════════════
+   LOCAL AUTH (localStorage)
+   ═══════════════════════ */
+const AUTH_KEY="compass_users_v1";
+const SESSION_KEY="compass_session_v1";
+
+function getUsers(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY)||"{}"); }catch(e){ return {}; } }
+function saveUsers(u){ localStorage.setItem(AUTH_KEY,JSON.stringify(u)); }
+function getSession(){ try{ return JSON.parse(localStorage.getItem(SESSION_KEY)||"null"); }catch(e){ return null; } }
+function saveSession(u){ localStorage.setItem(SESSION_KEY,JSON.stringify(u)); }
+function clearSession(){ localStorage.removeItem(SESSION_KEY); }
+
+function doSignup(name,email,pass){
+  const users=getUsers();
+  if(users[email]) return {ok:false,msg:"Email already registered. Please log in."};
+  users[email]={name,email,pass,joined:Date.now()};
+  saveUsers(users);
+  const session={name,email};
+  saveSession(session);
+  return {ok:true,user:session};
+}
+function doLogin(email,pass){
+  const users=getUsers();
+  if(!users[email]) return {ok:false,msg:"No account found. Please sign up first."};
+  if(users[email].pass!==pass) return {ok:false,msg:"Incorrect password."};
+  const session={name:users[email].name,email};
+  saveSession(session);
+  return {ok:true,user:session};
+}
+
+/* ═══════════════════════
+   AUTH MODAL
+   ═══════════════════════ */
+function AuthModal({onClose,onSuccess}){
+  const [tab,setTab]=useState("login");
+  const [form,setForm]=useState({name:"",email:"",pass:"",confirm:""});
+  const [err,setErr]=useState("");
+  const [ok,setOk]=useState("");
+  const upd=(k,v)=>{ setErr(""); setForm(f=>({...f,[k]:v})); };
+
+  const submit=()=>{
+    if(tab==="signup"){
+      if(!form.name.trim()) return setErr("Please enter your name.");
+      if(!form.email.includes("@")) return setErr("Enter a valid email.");
+      if(form.pass.length<6) return setErr("Password must be at least 6 characters.");
+      if(form.pass!==form.confirm) return setErr("Passwords do not match.");
+      const r=doSignup(form.name.trim(),form.email.trim().toLowerCase(),form.pass);
+      if(!r.ok) return setErr(r.msg);
+      setOk("Account created! Welcome to Compass 🎉");
+      setTimeout(()=>{ onSuccess(r.user); onClose(); },1200);
+    } else {
+      if(!form.email||!form.pass) return setErr("Please fill all fields.");
+      const r=doLogin(form.email.trim().toLowerCase(),form.pass);
+      if(!r.ok) return setErr(r.msg);
+      setOk(`Welcome back, ${r.user.name}! 👋`);
+      setTimeout(()=>{ onSuccess(r.user); onClose(); },900);
+    }
+  };
+
+  return(
+    <div className="modal-overlay" onClick={e=>{ if(e.target===e.currentTarget) onClose(); }}>
+      <div className="modal-box">
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+          <div>
+            <div style={{fontSize:28,marginBottom:4}}>🧭</div>
+            <h2 className="modal-title">{tab==="login"?"Welcome Back":"Join Compass"}</h2>
+          </div>
+          <button onClick={onClose} style={{background:"none",border:"none",color:"var(--muted2)",fontSize:22,cursor:"pointer",padding:4}}>×</button>
+        </div>
+        <div className="auth-tabs">
+          <button className={`auth-tab${tab==="login"?" active":""}`} onClick={()=>{setTab("login");setErr("");}}>Login</button>
+          <button className={`auth-tab${tab==="signup"?" active":""}`} onClick={()=>{setTab("signup");setErr("");}}>Sign Up</button>
+        </div>
+        {err&&<div className="auth-error">⚠️ {err}</div>}
+        {ok&&<div className="auth-success">✅ {ok}</div>}
+        <div className="form-grid">
+          {tab==="signup"&&(
+            <div>
+              <label className="f-label">Full Name</label>
+              <input className="inp" placeholder="Your full name" value={form.name} onChange={e=>upd("name",e.target.value)}/>
+            </div>
+          )}
+          <div>
+            <label className="f-label">Email</label>
+            <input className="inp" type="email" placeholder="you@email.com" value={form.email} onChange={e=>upd("email",e.target.value)} onKeyDown={e=>e.key==="Enter"&&submit()}/>
+          </div>
+          <div>
+            <label className="f-label">Password</label>
+            <input className="inp" type="password" placeholder={tab==="signup"?"Min 6 characters":"Your password"} value={form.pass} onChange={e=>upd("pass",e.target.value)} onKeyDown={e=>e.key==="Enter"&&submit()}/>
+          </div>
+          {tab==="signup"&&(
+            <div>
+              <label className="f-label">Confirm Password</label>
+              <input className="inp" type="password" placeholder="Repeat password" value={form.confirm} onChange={e=>upd("confirm",e.target.value)} onKeyDown={e=>e.key==="Enter"&&submit()}/>
+            </div>
+          )}
+        </div>
+        <button className="btn-gold" style={{width:"100%",justifyContent:"center",padding:"14px",marginTop:18,fontSize:15}} onClick={submit}>
+          {tab==="login"?"Login to Compass →":"Create Free Account →"}
+        </button>
+        <p style={{fontSize:12,color:"var(--muted2)",textAlign:"center",marginTop:12}}>
+          {tab==="login"?"Don't have an account? ":"Already have an account? "}
+          <button onClick={()=>{setTab(tab==="login"?"signup":"login");setErr("");}} style={{background:"none",border:"none",color:"var(--gold)",cursor:"pointer",fontSize:12}}>
+            {tab==="login"?"Sign up free →":"Login →"}
+          </button>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════
+   NAV
+   ═══════════════════════ */
+function Nav({view,setView,user,onLogout,onAuthOpen}){
+  return(
+    <nav>
+      <div className="nav-inner">
+        <button className="logo" onClick={()=>setView("home")}>
+          <div className="logo-mark">C</div>
+          <span className="logo-text">Compass<span style={{color:"var(--gold)"}}>.</span></span>
+        </button>
+        <div className="nav-links">
+          <button className="nav-link" onClick={()=>setView("home")}>Home</button>
+          <button className="nav-link" onClick={()=>setView("explore")}>Explore Paths</button>
+          <button className="nav-link" onClick={()=>setView("generator")}>Get Roadmap</button>
+        </div>
+        <div className="nav-user">
+          {user ? (
+            <>
+              <span className="user-badge">👤 {user.name.split(" ")[0]}</span>
+              <button className="btn-outline" style={{padding:"7px 16px",fontSize:13}} onClick={onLogout}>Logout</button>
+            </>
+          ):(
+            <>
+              <button className="nav-link" onClick={onAuthOpen}>Login</button>
+              <button className="btn-gold" onClick={()=>setView("generator")}>Get My Roadmap →</button>
+            </>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+/* ═══════════════════════
+   HERO
+   ═══════════════════════ */
+function Hero({setView,onAuthOpen}){
+  return(
+    <section className="hero">
+      <div className="hero-glow"/>
+      <div className="hero-glow2"/>
+      <div className="badge a1"><span className="badge-dot"/>AI Career Intelligence — Built for India</div>
+      <h1 className="hero-h1 a2">
+        Your Career.<br/>
+        <span style={{color:"var(--gold)",fontStyle:"italic"}}>Mapped by AI.</span>
+      </h1>
+      <p className="hero-sub a3">
+        From Class 10 stream selection to FAANG placements — Compass builds your personalized career blueprint in minutes.
+      </p>
+      <div className="hero-btns a4">
+        <button className="btn-gold" style={{fontSize:15,padding:"15px 38px"}} onClick={()=>setView("generator")}>
+          Generate My Roadmap ✨
+        </button>
+        <button className="btn-outline" style={{fontSize:15,padding:"15px 28px"}} onClick={()=>setView("explore")}>
+          Explore Career Paths →
+        </button>
+      </div>
+      <div className="hero-stats a5">
+        {[["10K+","Roadmaps Generated"],["98%","User Satisfaction"],["₹35L+","Avg Target Package"],["3 Min","To Your Blueprint"]].map(([n,l])=>(
+          <div key={l} style={{textAlign:"center"}}>
+            <div className="stat-n">{n}</div>
+            <div className="stat-l">{l}</div>
+          </div>
+        ))}
+      </div>
+      <div className="scroll-hint a6">
+        <div className="scroll-line"/>
+        <span style={{fontSize:10,letterSpacing:2,textTransform:"uppercase"}}>Scroll</span>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════
+   MARQUEE
+   ═══════════════════════ */
+function Marquee(){
+  const items=[...MARQUEE_ITEMS,...MARQUEE_ITEMS];
+  return(
+    <div className="marquee-wrap">
+      <div className="marquee-inner">
+        {[0,1].map(k=>(
+          <div className="marquee-track" key={k} aria-hidden={k===1}>
+            {items.map((t,i)=>(
+              <span className="marquee-item" key={i}>
+                <span style={{width:5,height:5,borderRadius:"50%",background:"var(--gold)",opacity:.5,flexShrink:0,display:"inline-block"}}/>
+                {t}
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════
+   FOR WHO
+   ═══════════════════════ */
+function ForWho({setView}){
+  const cards=[
+    {icon:"📚",title:"10th & 12th Students",desc:"Stream confusion? Entrance exam dilemma? We map the exact path from your grade to your dream college — JEE, NEET, Design, Law, or abroad.",tags:["Stream Selection","College Mapping","Exam Strategy","India vs Abroad"]},
+    {icon:"👨‍👩‍👧",title:"Parents",desc:"Translate complex career options into clear, ROI-driven guidance. Private vs government, India vs abroad, cost analysis — everything you need to support your child confidently.",tags:["ROI Analysis","College Selection","Career Clarity","Budget Planning"]},
+    {icon:"💼",title:"Working Professionals",desc:"Stuck in the wrong career? Want to crack product, FAANG, or build your startup? We build a realistic switch roadmap based on your experience and salary goals.",tags:["Career Switch","Upskilling","FAANG Prep","Salary Jump"]},
+  ];
+  return(
+    <section className="section" id="for-who">
+      <div className="wrap">
+        <div className="a1" style={{textAlign:"center"}}>
+          <div style={{fontSize:11,letterSpacing:"2.5px",textTransform:"uppercase",color:"var(--gold)",fontWeight:600,marginBottom:12}}>Who Is This For</div>
+          <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(32px,5vw,52px)",fontWeight:600,letterSpacing:"-.8px"}}>
+            Built for every stage of<br/><span style={{fontStyle:"italic",color:"var(--gold)"}}>your journey</span>
+          </h2>
+        </div>
+        <div className="who-grid">
+          {cards.map((c,i)=>(
+            <div className={`who-card a${i+2}`} key={i} onClick={()=>setView("generator")}>
+              <span className="who-icon">{c.icon}</span>
+              <h3 className="who-title">{c.title}</h3>
+              <p className="who-desc">{c.desc}</p>
+              <div className="tags">{c.tags.map(t=><span className="chip" key={t}>{t}</span>)}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════
+   FEATURES
+   ═══════════════════════ */
+function Features(){
+  return(
+    <section className="section" id="features" style={{background:"rgba(255,255,255,.015)",borderTop:"1px solid var(--border)",borderBottom:"1px solid var(--border)"}}>
+      <div className="wrap">
+        <div style={{textAlign:"center"}}>
+          <div style={{fontSize:11,letterSpacing:"2.5px",textTransform:"uppercase",color:"var(--gold)",fontWeight:600,marginBottom:12}}>Features</div>
+          <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(30px,4vw,48px)",fontWeight:600,letterSpacing:"-.7px"}}>
+            Everything you need.<br/><span style={{fontStyle:"italic",color:"var(--gold)"}}>Nothing you don't.</span>
+          </h2>
+        </div>
+        <div className="bento">
+          {FEATURES.map((f,i)=>(
+            <div key={i} className={`bento-card a${i+1}${f.wide?" wide":""}`}>
+              <div className="bento-ico">{f.icon}</div>
+              <h3 className="bento-title">{f.title}</h3>
+              <p className="bento-desc">{f.desc}</p>
+              <div className="bento-number">{f.n}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════
+   HOW IT WORKS
+   ═══════════════════════ */
+function HowItWorks(){
+  const steps=[
+    {n:"01",t:"Tell Us About You",d:"Select your profile — student, parent, or professional. Share your current stage, goals, and what's holding you back."},
+    {n:"02",t:"AI Builds Your Path",d:"Our AI processes thousands of career trajectories to construct a roadmap specific to your situation, goals, and timeline."},
+    {n:"03",t:"Get Your Blueprint",d:"Receive a phase-by-phase plan with timelines, resources, milestones, salary benchmarks, and honest warnings."},
+  ];
+  return(
+    <section className="section" id="how">
+      <div className="wrap">
+        <div style={{textAlign:"center"}}>
+          <div style={{fontSize:11,letterSpacing:"2.5px",textTransform:"uppercase",color:"var(--gold)",fontWeight:600,marginBottom:12}}>How It Works</div>
+          <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(30px,4vw,48px)",fontWeight:600,letterSpacing:"-.7px"}}>
+            From confusion to clarity<br/><span style={{fontStyle:"italic",color:"var(--gold)"}}>in 3 minutes</span>
+          </h2>
+        </div>
+        <div className="how-grid">
+          {steps.map((s,i)=>(
+            <div key={i} className={`how-card a${i+2}`}>
+              <div className="how-num">{s.n}</div>
+              <h3 className="how-title">{s.t}</h3>
+              <p className="how-desc">{s.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════
+   TESTIMONIALS
+   ═══════════════════════ */
+function Testimonials(){
+  return(
+    <section className="section" style={{background:"rgba(255,255,255,.015)",borderTop:"1px solid var(--border)",borderBottom:"1px solid var(--border)"}}>
+      <div className="wrap">
+        <div style={{textAlign:"center"}}>
+          <div style={{fontSize:11,letterSpacing:"2.5px",textTransform:"uppercase",color:"var(--gold)",fontWeight:600,marginBottom:12}}>Success Stories</div>
+          <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(30px,4vw,48px)",fontWeight:600,letterSpacing:"-.7px"}}>
+            Real people.<br/><span style={{fontStyle:"italic",color:"var(--gold)"}}>Real results.</span>
+          </h2>
+        </div>
+        <div className="testi-grid">
+          {TESTIMONIALS.map((t,i)=>(
+            <div key={i} className={`testi-card a${i+2}`}>
+              <div className="testi-stars">{[...Array(5)].map((_,j)=><span key={j} className="testi-star">★</span>)}</div>
+              <p className="testi-quote">"{t.quote}"</p>
+              <div className="testi-author">
+                <div className="testi-avatar">{t.init}</div>
+                <div>
+                  <div className="testi-name">{t.name}</div>
+                  <div className="testi-role">{t.role}</div>
+                </div>
+                <span className="chip" style={{marginLeft:"auto"}}>{t.result}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════
+   CTA
+   ═══════════════════════ */
+function CTA({setView}){
+  return(
+    <section className="cta-section cta-border">
+      <div className="cta-bg"/>
+      <div className="wrap">
+        <h2 className="cta-h2 a1">Ready to map your<br/><span style={{color:"var(--gold)",fontStyle:"italic"}}>future?</span></h2>
+        <p className="a2" style={{fontSize:16,color:"var(--muted)",marginBottom:36,lineHeight:1.7}}>
+          Join thousands of students and professionals who found clarity with Compass.<br/>Free to use. No sign-up required.
+        </p>
+        <div className="a3" style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
+          <button className="btn-gold" style={{fontSize:15,padding:"15px 38px"}} onClick={()=>setView("generator")}>Generate My Free Roadmap</button>
+          <button className="btn-outline" style={{fontSize:15,padding:"15px 28px"}} onClick={()=>setView("explore")}>Explore All Career Paths</button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════
+   FOOTER
+   ═══════════════════════ */
+function Footer({setView}){
+  return(
+    <footer>
+      <div className="wrap">
+        <div className="footer-inner">
+          <div>
+            <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
+              <div className="logo-mark">C</div>
+              <span className="logo-text">Compass</span>
+            </div>
+            <p className="footer-copy">AI Career Intelligence · Built for India's next generation</p>
+          </div>
+          <div className="footer-links">
+            <button className="footer-link" onClick={()=>setView("home")}>Home</button>
+            <button className="footer-link" onClick={()=>setView("explore")}>Explore</button>
+            <button className="footer-link" onClick={()=>setView("generator")}>Roadmap</button>
+            <button className="footer-link" onClick={()=>window.open("https://github.com","_blank")}>GitHub</button>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ═══════════════════════
+   EXPLORE PATHS PAGE
+   ═══════════════════════ */
+const EXPLORE_PATHS = {
+  "After 10th": [
+    {
+      icon:"⚙️",title:"PCM — Engineering Track",sub:"Science with Physics, Chemistry, Mathematics",
+      paths:[
+        {t:"JEE Main + Advanced → IIT/NIT/BITS",items:["Score 75%+ in Class 12 boards","JEE Main (January + April attempts)","JEE Advanced for IIT (top 2.5L in Mains qualify)","JoSAA Counselling for seat allotment"]},
+        {t:"State Engineering CET",items:["MHT-CET (Maharashtra)","KCET (Karnataka)","WBJEE (West Bengal)","COMEDK (Private Engineering Karnataka)"]},
+        {t:"Private College Entrances",items:["BITSAT → BITS Pilani/Goa/Hyderabad","VITEEE → VIT","MET → Manipal","SRM Joint Engineering Entrance"]},
+        {t:"Diploma (Polytechnic)",items:["3-year diploma in Engineering","Lateral entry to B.Tech 2nd year later","Faster employment route","Government Polytechnic colleges recommended"]},
+      ],
+      chips:["IIT","NIT","BITS","JEE","₹15-80 LPA"]
+    },
+    {
+      icon:"🧬",title:"PCB — Medical Track",sub:"Science with Physics, Chemistry, Biology",
+      paths:[
+        {t:"NEET UG → MBBS/BDS",items:["NEET is the only entrance for MBBS/BDS in India","650+ for government MBBS","Top colleges: AIIMS, JIPMER, GMC","BDS (Dentistry) at 500+ NEET score"]},
+        {t:"Allied Health Sciences",items:["B.Sc Nursing (3 years)","B.Pharm / Pharm.D","B.Sc Medical Lab Technology","B.Sc Radiography / Physiotherapy"]},
+        {t:"Biotech / Research Path",items:["BSc Biotechnology → MSc → Research","IISER / IISc BSc Research","JIPMER / PGIMER research programs","Bioinformatics, Genomics, Drug Discovery careers"]},
+        {t:"MBBS Abroad",items:["Philippines, Russia, Kazakhstan — lower fees","Must clear NExT exam to practice in India","FMGE to be replaced by NExT from 2024","Research visa/bond requirements carefully"]},
+      ],
+      chips:["NEET","MBBS","AIIMS","₹8-80 LPA","Research"]
+    },
+    {
+      icon:"💰",title:"Commerce Track",sub:"Accountancy, Business Studies, Economics",
+      paths:[
+        {t:"CA — Chartered Accountancy",items:["CA Foundation → Intermediate (2 groups) → Final","5-6 years total | ICAI conducting body","Fresher CA earns ₹8-25 LPA","Big 4 recruiters: Deloitte, PwC, EY, KPMG"]},
+        {t:"BBA → MBA Path",items:["BBA from Christ/Symbiosis/Amity (3 years)","CAT/GMAT after 2-3 years work experience","IIM MBA: ₹25-80 LPA average CTC","International MBA: Harvard/ISB (₹1-2 Cr fees)"]},
+        {t:"BCom → Various Paths",items:["BCom Hons from DU (97%+ cutoff)","CFA after BCom for Finance careers","Company Secretary (CS) from ICSI","BCom + MBA = versatile combination"]},
+        {t:"Law (after Commerce)",items:["CLAT → NLU (5-year BA LLB)","Corporate Law: ₹15-25 LPA fresher at top firms","NLSIU, NLU Delhi, NUJS Kolkata — top colleges","Law + MBA = Corporate career combo"]},
+      ],
+      chips:["CA","MBA","BBA","Law","₹8-80 LPA"]
+    },
+    {
+      icon:"📜",title:"Arts & Humanities Track",sub:"History, Political Science, Economics, Psychology",
+      paths:[
+        {t:"UPSC Civil Services (IAS/IPS/IFS)",items:["BA → Graduation → UPSC Prelims → Mains → Interview","Age: 21-32 years; 6 attempts for General category","Prelims: GS + CSAT | Mains: 9 papers","Coaching: Delhi, Hyderabad; Online: Drishti, Vision IAS"]},
+        {t:"Law (CLAT → NLU)",items:["CLAT after Class 12 for 5-year LLB","Top NLUs: NLSIU Bengaluru, NLU Delhi, NUJS","Corporate Law, Litigation, Human Rights Law","Freshers at top law firms: ₹15-25 LPA"]},
+        {t:"Psychology / Social Work",items:["BSc/BA Psychology → MSc → PhD or Clinical","TISS Mumbai (Social Work) — top college","NIMHANS Bengaluru for Clinical Psychology","Growing field: ₹5-20 LPA; therapy practice unlimited"]},
+        {t:"Mass Communication / Journalism",items:["IIMC New Delhi (entrance exam)","Symbiosis Institute of Media & Communication","Digital media, OTT content creation booming","Freelance journalism + YouTube creator economy"]},
+      ],
+      chips:["UPSC","Law","Psychology","Journalism","Civil Services"]
+    },
+  ],
+  "After 12th": [
+    {
+      icon:"💻",title:"Engineering Colleges",sub:"B.Tech / BE — 4 years",
+      paths:[
+        {t:"IITs (Indian Institute of Technology)",items:["23 IITs in India — top: Bombay, Delhi, Madras, Kanpur","JEE Advanced required; 99%+ percentile in Mains","CSE at IIT: ₹25-80 LPA average","100% placement record for CSE/EE/Mech branches"]},
+        {t:"NITs & IIITs",items:["31 NITs across India; NIT Trichy/Warangal/Surathkal are top","JEE Mains 95-99 percentile; JoSAA counselling","CSE at top NITs: ₹12-25 LPA average","IIITs (Hyderabad/Allahabad) have excellent CS programs"]},
+        {t:"BITS Pilani (+ Goa & Hyderabad)",items:["BITSAT exam — score 300+ for CSE Pilani","Top private engineering college in India","Dual degree (BE+MSc) available","Placement: ₹12-40 LPA; many global companies recruit"]},
+        {t:"Private Tier-1 Colleges",items:["VIT Vellore, Manipal, KIIT, Thapar","Fees: ₹12-20 lakhs total; placements ₹6-15 LPA","Check actual placement data — not brochure claims","Good for students who miss JEE/BITS cutoffs"]},
+      ],
+      chips:["IIT","NIT","BITS","B.Tech","₹12-80 LPA"]
+    },
+    {
+      icon:"🏥",title:"Medical Colleges",sub:"MBBS/BDS — 5.5 years",
+      paths:[
+        {t:"AIIMS (6 campuses)",items:["NEET-UG + separate AIIMS merit list","AIIMS Delhi — India's most prestigious medical college","Fees: Extremely subsidized (₹1,000-2,000/year!)","AIIMS Delhi MBBS cutoff: 99.9+ percentile NEET"]},
+        {t:"Government Medical Colleges",items:["State government medical colleges via MCC + state counselling","NEET 600+ for most state govt MBBS seats","Total fees: ₹5-15 lakhs for entire MBBS","Grant Medical Mumbai, KEM Mumbai, KGMU Lucknow — top govt colleges"]},
+        {t:"Private Medical Colleges",items:["NEET 500-600 range; fees ₹50 lakhs to ₹1 crore","Sri Ramachandra, Manipal, Amrita — reputed private colleges","Management quota: Higher fees but lower NEET cutoff","Always verify MCI/NMC recognition before admission"]},
+        {t:"BDS — Bachelor of Dental Surgery",items:["NEET 450-500 for private; 500-550 for govt BDS","5-year program + 1 year internship","Private dental practice: ₹3-20 LPA (builds over time)","MDS specialization available after BDS (NEET MDS)"]},
+      ],
+      chips:["MBBS","AIIMS","NEET","BDS","₹8-50 LPA"]
+    },
+    {
+      icon:"🎓",title:"Management & Commerce UG",sub:"BBA / BCom — 3 years",
+      paths:[
+        {t:"BBA — Bachelor of Business Administration",items:["Christ Bengaluru, Symbiosis Pune, NMIMS Mumbai — top colleges","Entrance: SET (Symbiosis), IPU-CET, CUET-UG, NPAT","3 years → Work experience → MBA = ideal path","BBA specializations: Finance, Marketing, HR, International Business"]},
+        {t:"BCom Honours",items:["DU BCom Hons: 97%+ cutoff; best BCom in India","Christ Bengaluru, Loyola Chennai, Presidency Kolkata","CUET-UG scores for DU admission (post 2022)","BCom + CA = highest ROI combination for Commerce students"]},
+        {t:"Economics (Hons)",items:["Delhi School of Economics MA after BA (Eco) Hons","BA Economics → MA → PhD OR → MBA Finance","Shri Ram College of Commerce, Presidency — top colleges","Careers: Research, Banking, Policy, Consulting, Finance"]},
+        {t:"CA Foundation (after Class 12)",items:["Register ICAI immediately after board exams","Foundation exam in November (after June result)","Foundation → Intermediate: 2 attempts usually","CA Final: 5-7 years from start; ₹8-25 LPA fresher"]},
+      ],
+      chips:["BBA","BCom","CA","MBA","₹6-25 LPA"]
+    },
+    {
+      icon:"🎨",title:"Design & Creative Colleges",sub:"B.Des / BFA — 4 years",
+      paths:[
+        {t:"NID — National Institute of Design",items:["NID Design Aptitude Test (DAT) — tough creative entrance","NID Ahmedabad — India's Harvard of Design","Product Design, Communication Design, UX Design","NID graduates at Apple, Google, top agencies"]},
+        {t:"NIFT — National Institute of Fashion Technology",items:["15 campuses across India — Delhi is top","NIFT Entrance: CAT + GAT + Situation Test","Fashion Design, Leather Design, Textile Design","Industry exposure from Day 1; good placement record"]},
+        {t:"Architecture (B.Arch)",items:["NATA (National Aptitude Test in Architecture) required","Top colleges: SPA Delhi, CEPT Ahmedabad, KRVIA Mumbai","5-year B.Arch program; challenging but creative","Architect salary: ₹4-25 LPA; own practice is lucrative"]},
+        {t:"UX/UI Design (B.Des)",items:["Srishti Bengaluru, Pearl Academy, Symbiosis Design School","UX Design is the hottest design career: ₹8-20 LPA freshers","Tools: Figma, Adobe XD, Sketch — self-learn too","Tech companies hire UX designers aggressively"]},
+      ],
+      chips:["NID","NIFT","Design","Architecture","₹6-25 LPA"]
+    },
+  ],
+  "UG Students": [
+    {
+      icon:"💻",title:"Tech Career Paths from Any UG Degree",sub:"Software, Data, Product, Cybersecurity",
+      paths:[
+        {t:"Software Development (SWE)",items:["Master 1 language: Python/Java/JavaScript","Data Structures & Algorithms: LeetCode 300+ problems","Build 3 projects: GitHub + deployed links","Campus or off-campus placements at IT companies"]},
+        {t:"Data Science & Analytics",items:["Python + SQL + Statistics foundation","Kaggle competitions for real data experience","Tools: Pandas, NumPy, Scikit-learn, Tableau","Entry: ₹6-14 LPA; Senior: ₹18-35 LPA"]},
+        {t:"Product Management",items:["PM is cross-functional: Tech + Business + Design","Start with: PM Fundamentals (Exponent course)","Internship at product startup is gold","MBA from IIM/ISP significantly helps PM career"]},
+        {t:"Cybersecurity",items:["CEH, CISSP, CompTIA Security+ certifications","Practice on HackTheBox, TryHackMe (free)","Bug bounty programs for real-world experience","Fastest growing: ₹8-25 LPA for mid-level"]},
+      ],
+      chips:["SWE","Data Science","Product","Security","₹8-35 LPA"]
+    },
+    {
+      icon:"🏦",title:"Finance & Banking Careers",sub:"Banking, Investment, Insurance",
+      paths:[
+        {t:"Investment Banking / Consulting",items:["MBA from IIM/ISB is the standard entry","Internship at Big4 or boutique bank in 2nd year","CFA Charter for investment analysis credibility","IB Analyst: ₹25-80 LPA; grueling hours"]},
+        {t:"Government Banking (IBPS/SBI)",items:["IBPS PO: Apply June; exam October; join January","SBI PO: More prestigious, harder cutoffs","Salary: ₹52,000-1 Lakh/month with allowances","Job security + promotions = long-term stability"]},
+        {t:"CA / CFA Combo",items:["CA + CFA = highest finance credibility in India","CFA Level 1: Self-study 300 hours, $250 fee","CA: 5 years; CFA: 3 years (can overlap)","Big4, Fund Houses, Investment Banks recruit heavily"]},
+        {t:"Stock Market / Trading",items:["NSE Academy Certified courses","NISM certifications (Series V-A for Mutual Fund)","Start paper trading before real money","Prop trading firms hire top quantitative analysts"]},
+      ],
+      chips:["CA","CFA","IBPS","IB","₹8-80 LPA"]
+    },
+    {
+      icon:"🌍",title:"Abroad — MS / MBA Pathways",sub:"USA, Canada, UK, Germany, Australia",
+      paths:[
+        {t:"MS in USA",items:["GRE 320+ | TOEFL 100+ | GPA 8+","Application: Sept-December for Fall intake","Funding: RA/TA possible; scholarships available","Cost: $25-45K/year; starting salary $80-120K"]},
+        {t:"MBA Abroad",items:["GMAT 700+ | Work experience 3-5 years preferred","Top: Harvard, Wharton, Booth, ISB (India)","ISB Hyderabad: 1-year MBA, ₹25-70 LPA avg","Scholarship: Check Forte, Merit, Diversity awards"]},
+        {t:"Canada — MS + PR Path",items:["IELTS 7+; GRE sometimes waived","Universities: UofT, UBC, Waterloo, McGill","PG Work Permit (PGWP) → PR after 2 years","Total cost: ₹60-90L; IT jobs $70-90K CAD"]},
+        {t:"Germany — Nearly Free Education",items:["No tuition fees at public universities","German language: A1-B2 for German taught programs","English taught MS programs exist (no German needed)","Living cost: ₹7-9L/year; Blue Card for jobs after"]},
+      ],
+      chips:["MS USA","Canada PR","Germany","MBA","$80-120K"]
+    },
+  ],
+  "Working Professionals": [
+    {
+      icon:"🔄",title:"Career Switch Roadmaps",sub:"Strategic transition paths",
+      paths:[
+        {t:"Any Role → Software Engineering",items:["Python or JavaScript: 3-6 months self-study","LeetCode DSA: 200+ problems over 6 months","2 portfolio projects + GitHub + deployed apps","Bootcamp optional; self-study works if disciplined","Off-campus applications: LinkedIn + referrals"]},
+        {t:"Any Role → Data Science",items:["Python + SQL + Statistics: 3-4 months","Kaggle: Complete 3 competitions with top 30% finish","Portfolio: 2-3 analysis projects on real datasets","Entry without CS degree: Possible with strong portfolio","Tools: Pandas, Scikit-learn, Tableau, Power BI"]},
+        {t:"Tech → Product Management",items:["Read: Inspired by Marty Cagan — mandatory","PM School or Cohort: Exponent, Reforge, or PM Dojo","Case studies: Amazon PR/FAQ, Airbnb redesign-style","Internal pivot first — volunteer as PM shadow","MBA helps but not required if you have tech credibility"]},
+        {t:"Any Role → Digital Marketing",items:["Google Analytics, Google Ads, Meta Blueprint — all free","HubSpot Inbound Marketing Certification — free","Build personal brand: Blog, LinkedIn posts, case studies","Freelance 2-3 clients during current job","Digital marketing managers: ₹8-20 LPA in 3 years"]},
+      ],
+      chips:["Career Switch","SWE","Data Science","PM","₹12-40 LPA"]
+    },
+    {
+      icon:"📈",title:"Salary Growth & Promotion",sub:"Grow where you are",
+      paths:[
+        {t:"FAANG / Top Tech Companies",items:["DSA: 300+ LeetCode (Easy+Medium+Hard)","System Design: Grokking the System Design Interview","Behavioral: STAR framework for all experiences","Referral: 80% of FAANG hires come via referral — network","Timeline: 6-12 months serious prep; apply with referral"]},
+        {t:"MBA for Career Acceleration",items:["CAT 99+ for IIM ABC; 95+ for new IIMs","GMAT 720+ for ISB, IIM Calcutta PGPEX","2-3 years work experience ideal before MBA","IIM A/B/C placement: ₹30-90 LPA average CTC","1-year programs: ISB, IIM C/EPGP — for working pros"]},
+        {t:"Freelancing / Consulting",items:["Build expertise reputation before freelancing","Toptal, Upwork, Contra — platform options","Direct clients via LinkedIn/Twitter outreach","Freelance Developer: ₹3,000-10,000/hour possible","Freelance Consultant: Build a boutique practice"]},
+        {t:"Startup / Entrepreneurship",items:["Validate idea: 100 customer conversations before building","Funding: YCombinator (3% equity), Sequoia Surge, Lightspeed","Accelerators in India: 91springboard, GSF, NSRCEL IIM","Revenue first: Customers beat investors at early stage","ESOP from current job: Understand cliff, vesting before joining"]},
+      ],
+      chips:["FAANG","MBA","Freelance","Startup","₹20-100 LPA"]
+    },
+  ],
+};
+
+function ExplorePaths(){
+  const tabs=Object.keys(EXPLORE_PATHS);
+  const [activeTab,setActiveTab]=useState(tabs[0]);
+  const [openCard,setOpenCard]=useState(null);
+
+  return(
+    <div className="explore-wrap">
+      <div className="a1" style={{marginBottom:32}}>
+        <div style={{fontSize:11,letterSpacing:"2.5px",textTransform:"uppercase",color:"var(--gold)",fontWeight:600,marginBottom:8}}>Career Explorer</div>
+        <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(28px,4vw,44px)",fontWeight:600,letterSpacing:"-.5px",marginBottom:12}}>
+          Every Path.<br/><span style={{color:"var(--gold)",fontStyle:"italic"}}>Mapped in Detail.</span>
+        </h2>
+        <p style={{fontSize:14,color:"var(--muted)",lineHeight:1.7,maxWidth:520}}>
+          Browse every possible career route — from 10th standard stream selection to working professional growth tracks. Click any card to expand the full path.
+        </p>
+      </div>
+      <div className="explore-tabs">
+        {tabs.map(t=>(
+          <button key={t} className={`ex-tab${activeTab===t?" active":""}`} onClick={()=>{setActiveTab(t);setOpenCard(null);}}>
+            {t}
+          </button>
+        ))}
+      </div>
+      {(EXPLORE_PATHS[activeTab]||[]).map((card,ci)=>(
+        <div key={ci} className={`path-card${openCard===ci?" open":""}`} onClick={()=>setOpenCard(openCard===ci?null:ci)}>
+          <div className="path-card-header">
+            <span className="path-icon">{card.icon}</span>
+            <div style={{flex:1}}>
+              <div className="path-title">{card.title}</div>
+              <div className="path-sub">{card.sub}</div>
+            </div>
+            <button className={`path-toggle${openCard===ci?" open":""}`} onClick={e=>{e.stopPropagation();setOpenCard(openCard===ci?null:ci);}}>+</button>
+          </div>
+          <div className={`path-body${openCard===ci?" open":""}`}>
+            <div className="path-body-inner">
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:12,marginBottom:16}}>
+                {card.paths.map((p,pi)=>(
+                  <div className="sub-path" key={pi}>
+                    <div className="sub-path-title">{p.t}</div>
+                    <ul className="sub-path-list">
+                      {p.items.map((it,ii)=><li key={ii} className="sub-path-item">{it}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <div className="path-chips">
+                {card.chips.map(c=><span className="chip" key={c}>{c}</span>)}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ═══════════════════════
+   STEP BAR
+   ═══════════════════════ */
+function StepBar({step}){
+  const steps=["Profile","Details","Roadmap"];
+  return(
+    <div className="step-bar">
+      {steps.map((s,i)=>{
+        const n=i+1,done=step>n,active=step===n;
+        return(
+          <React.Fragment key={i}>
+            <div className="step-item">
+              <div className={`step-circle ${done?"s-done":active?"s-active":"s-todo"}`}>{done?"✓":n}</div>
+              <span className="step-label" style={{color:active?"var(--gold)":done?"var(--muted)":"rgba(245,240,232,.2)"}}>{s}</span>
+            </div>
+            {i<2&&<div className={`step-line${step>i+1?" done":""}`}/>}
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ═══════════════════════
+   GENERATOR
+   ═══════════════════════ */
+function Generator({onGenerate}){
+  const [step,setStep]=useState(1);
+  const [profile,setProfile]=useState("");
+  const [form,setForm]=useState({name:"",stage:"",goal:"",interests:"",timeline:"6 months",challenges:""});
+  const upd=(k,v)=>setForm(f=>({...f,[k]:v}));
+
+  return(
+    <div className="gen-wrap">
+      <div className="a1">
+        <div className="gen-eyebrow">AI Roadmap Generator</div>
+        <h2 className="gen-h2 a2">Your personalized<br/><span style={{color:"var(--gold)",fontStyle:"italic"}}>career blueprint</span></h2>
+      </div>
+      <StepBar step={step}/>
+      {step===1&&(
+        <div className="a2">
+          <p style={{fontSize:14,color:"var(--muted)",marginBottom:20,lineHeight:1.7}}>Who are you? We'll tailor everything to your situation.</p>
+          <div className="profile-list">
+            {PROFILES.map(p=>(
+              <div key={p.id} className={`profile-card${profile===p.id?" active":""}`} onClick={()=>setProfile(p.id)}>
+                <span className="pc-icon">{p.icon}</span>
+                <div>
+                  <div className="pc-title">{p.title}</div>
+                  <div className="pc-desc">{p.desc}</div>
+                </div>
+                {profile===p.id&&<div className="pc-check">✓</div>}
+              </div>
+            ))}
+          </div>
+          <div className="form-btns">
+            <button className="btn-gold" style={{flex:1,justifyContent:"center",padding:"14px"}} onClick={()=>profile&&setStep(2)} disabled={!profile}>Continue →</button>
+          </div>
+        </div>
+      )}
+      {step===2&&(
+        <div className="a2">
+          <div className="form-grid">
+            <div>
+              <label className="f-label">Your Name</label>
+              <input className="inp" placeholder="What should we call you?" value={form.name} onChange={e=>upd("name",e.target.value)}/>
+            </div>
+            <div>
+              <label className="f-label">Current Stage</label>
+              <select className="inp" value={form.stage} onChange={e=>upd("stage",e.target.value)}>
+                <option value="">Select your current stage...</option>
+                {(STAGES[profile]||[]).map(o=><option key={o} value={o}>{o}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="f-label">Select Your Roadmap Goal</label>
+              <select className="inp" value={form.goal} onChange={e=>upd("goal",e.target.value)}>
+                <option value="">Choose your exact career goal...</option>
+                {(ROADMAP_OPTIONS[profile]||[]).map(o=><option key={o.key} value={o.key}>{o.label}</option>)}
+              </select>
+              {!form.goal&&<p style={{fontSize:12,color:"var(--gold)",marginTop:6}}>⬆ Pick your goal from the list above — this ensures accurate roadmap output</p>}
+            </div>
+            <div>
+              <label className="f-label">Interests &amp; Strengths</label>
+              <input className="inp" placeholder="e.g. Math, coding, design, management, biology, writing..." value={form.interests} onChange={e=>upd("interests",e.target.value)}/>
+            </div>
+            <div>
+              <label className="f-label">Target Timeline</label>
+              <select className="inp" value={form.timeline} onChange={e=>upd("timeline",e.target.value)}>
+                {["3 months","6 months","1 year","18 months","2 years","3+ years"].map(o=><option key={o}>{o}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="f-label">Biggest Challenge (optional)</label>
+              <textarea className="inp" rows={3} placeholder="What's holding you back? Be honest — better info = better roadmap." value={form.challenges} onChange={e=>upd("challenges",e.target.value)}/>
+            </div>
+          </div>
+          <div className="form-btns">
+            <button className="btn-outline" onClick={()=>setStep(1)}>← Back</button>
+            <button className="btn-gold" style={{flex:1,justifyContent:"center"}} onClick={()=>{if(form.goal&&form.stage) onGenerate(profile,form);}} disabled={!form.goal||!form.stage}>
+              Generate My Roadmap ✨
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ═══════════════════════
+   ROADMAP VIEW
+   ═══════════════════════ */
+function RoadmapView({roadmap,generating,profile,onBack}){
+  const PROF=PROFILES.find(p=>p.id===profile);
+  const phaseColors=["#c9a96e","#e8d5a3","#a07b45","#d4b483","#8b6635"];
+
+  if(generating){
+    return(
+      <div className="loading-screen">
+        <div className="spinner"/>
+        <h3 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:32,fontWeight:500}}>Building your roadmap...</h3>
+        <p style={{color:"var(--muted)",fontSize:14,maxWidth:360,lineHeight:1.7}}>Analysing your profile and mapping the optimal career path for you.</p>
+        <div style={{display:"flex",flexDirection:"column",gap:8,width:"100%",maxWidth:320,marginTop:8}}>
+          {["Evaluating goal feasibility...","Mapping skill requirements...","Building phase roadmap...","Finding best resources...","Calculating milestones..."].map((t,i)=>(
+            <div key={i} style={{fontSize:12.5,color:"rgba(201,169,110,.55)",display:"flex",alignItems:"center",gap:10,animation:`shimmer 2s ${i*.35}s infinite`}}>
+              <div style={{width:4,height:4,borderRadius:"50%",background:"var(--gold)",flexShrink:0}}/>{t}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if(!roadmap) return null;
+
+  return(
+    <div className="rm-wrap">
+      <button className="back-btn fi" onClick={onBack}>← Generate New Roadmap</button>
+      <div className="rm-header a1">
+        <div className="rm-chips">
+          {PROF&&<span className="chip">{PROF.icon} {PROF.title}</span>}
+          {roadmap.timeline&&<span className="chip">⏱ {roadmap.timeline}</span>}
+          {roadmap.difficulty&&<span className="chip">📊 {roadmap.difficulty}</span>}
+          {roadmap.salaryRange&&<span className="chip">💰 {roadmap.salaryRange}</span>}
+        </div>
+        <h2 className="rm-h2">{roadmap.headline||"Your Personalized Career Roadmap"}</h2>
+        <p className="rm-summary">{roadmap.summary}</p>
+      </div>
+
+      {roadmap.topSkills?.length>0&&(
+        <div className="rm-section a2">
+          <div className="rm-section-label">Top Skills to Master</div>
+          <div className="skills-row">{roadmap.topSkills.map(s=><span className="chip" key={s}>{s}</span>)}</div>
+        </div>
+      )}
+
+      <div className="a3">
+        <div className="rm-section-label" style={{marginBottom:12}}>Your Roadmap</div>
+        {(roadmap.phases||[]).map((ph,i)=>(
+          <div className="phase-row" key={i}>
+            <div className="phase-left">
+              <div className="phase-dot" style={{background:phaseColors[i%5]}}/>
+              {i<roadmap.phases.length-1&&<div className="phase-line"/>}
+            </div>
+            <div className="phase-body" style={{border:`1px solid ${phaseColors[i%5]}22`}}>
+              <div className="phase-top">
+                <div className="phase-title">
+                  <span style={{color:phaseColors[i%5],marginRight:8}}>Phase {ph.id||i+1}</span>{ph.title}
+                </div>
+                <span className="phase-tag">{ph.duration}</span>
+              </div>
+              {ph.focus&&<div className="phase-focus">{ph.focus}</div>}
+              <ul className="phase-actions">
+                {(ph.actions||[]).map((a,j)=><li key={j} className="phase-action">{a}</li>)}
+              </ul>
+              {ph.milestone&&(
+                <div className="phase-milestone"><span>🏆</span><span>{ph.milestone}</span></div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {roadmap.resources?.length>0&&(
+        <div className="rm-section a4">
+          <div className="rm-section-label">Recommended Resources</div>
+          {roadmap.resources.map((r,i)=>(
+            <div className="resource-row" key={i}>
+              <div>
+                <div className="res-name">{r.name}</div>
+                <div className="res-type">{r.type}</div>
+              </div>
+              <span className={r.free?"badge-free":"badge-paid"}>{r.free?"Free":"Paid"}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {roadmap.warnings?.length>0&&(
+        <div className="a5">
+          <div className="rm-section-label" style={{marginBottom:12}}>⚠️ Watch Out For</div>
+          {roadmap.warnings.map((w,i)=>(
+            <div className="warning-item" key={i}><span className="warn-icon">!</span>{w}</div>
+          ))}
+        </div>
+      )}
+
+      <div className="rm-bottom-cta a6">
+        <p style={{fontSize:14,color:"var(--muted)",marginBottom:8}}>Have questions about your roadmap?</p>
+        <p style={{fontSize:13,color:"var(--gold)"}}>💬 Use the chat button (bottom right) to ask your AI career counsellor anything</p>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════
+   OFFLINE CHAT RESPONSES
+   ═══════════════════════ */
+const OFFLINE_CHAT = [
+  {k:["jee","iit","nit","engineering","pcm"],r:`For JEE preparation, here's what actually works:
+
+📚 Books: HC Verma (Physics), NCERT (Chemistry — most important!), Cengage/RD Sharma (Maths)
+⏰ Timeline: 2 years from Class 11 start
+📊 Target: 99+ percentile for IIT; 95+ for good NITs
+💡 Key insight: 45% of JEE is from Class 11 syllabus — don't ignore it!
+
+Coaching is optional — PhysicsWallah (free), Unacademy, or FIITJEE/Allen are top options.
+
+Start with NCERT, then move to problem books. Mock tests are the game-changer — attempt one full mock every week from January onwards.
+
+What specific part of JEE are you struggling with? Physics, Chemistry, or Maths?`},
+  {k:["neet","mbbs","doctor","medical","pcb"],r:`NEET roadmap essentials:
+
+📚 Most important: NCERT Biology 11+12 — read it 3 times minimum
+🎯 Target: 650+ for government MBBS seat
+📝 Exam: 720 marks total — Biology(360), Chemistry(180), Physics(180)
+⚠️ Reality: 24 lakh applicants for ~1 lakh government seats
+
+Strategy:
+• Biology: 85+/90 questions correct — this wins NEET
+• Chemistry: NCERT reactions directly asked; 40+/45 target
+• Physics: NEET-level only (not JEE level); 35+/45 target
+
+Free resources: PhysicsWallah Arjuna NEET batch, NTA official mocks
+Practice tool: MTG 30 Years NEET papers (most important book)
+
+What year are you in currently?`},
+  {k:["mba","cat","iim","management"],r:`MBA in India — honest guide:
+
+🏆 Tier 1: IIM A/B/C — CAT 99.5+ percentile required; ₹30-80 LPA average
+🥈 Tier 2: IIM I/K/L/MDI — CAT 95-99 percentile; ₹20-35 LPA average
+🏛️ ISB Hyderabad: GMAT 700+; 1-year MBA; ₹30-60 LPA average
+
+Key advice:
+• 2-3 years work experience BEFORE MBA = much better ROI
+• MBA right after engineering = waste of work-ex advantage
+• ISB is now equivalent to IIM A for most recruiters
+• Don't do MBA from tier-3 colleges — debt not worth it
+
+CAT preparation: 6-12 months; Verbal + Quant + LRDI
+
+Are you currently working or a fresh graduate?`},
+  {k:["switch","change career","data science","python","coding"],r:`Career switching to tech — here's the realistic path:
+
+If targeting Software Engineering:
+• Python or JavaScript: 3-4 months self-study (Udemy, freeCodeCamp)
+• Data Structures: LeetCode 200+ problems over 6 months
+• Projects: 2-3 on GitHub with deployed links
+• Timeline: 12-18 months to first tech job
+
+If targeting Data Science:
+• Python + SQL + Statistics: 4-5 months
+• Kaggle: Complete 3 competitions
+• Portfolio: 2 analysis projects
+• Entry salary: ₹6-14 LPA
+
+Critical: Don't quit your current job until you have an offer. Financial runway of 12 months is the safety net.
+
+What's your current background and what field are you switching to?`},
+  {k:["abroad","usa","canada","germany","ms","gre"],r:`Studying abroad — quick comparison:
+
+🇺🇸 USA (MS):
+• GRE 320+ | TOEFL 100+ | GPA 8+
+• Cost: ₹80-120L total; salary $80-120K
+• RA/TA funding possible at good universities
+
+🇨🇦 Canada:
+• IELTS 7+ ; GRE sometimes waived
+• Cost: ₹60-90L; IT jobs C$70-90K
+• PR possible after 2 years via Express Entry
+
+🇩🇪 Germany:
+• Public universities: Nearly FREE (no tuition)
+• Living cost: ₹7-9L/year
+• Blue Card → PR pathway after 2 years
+• English MS programs exist — no German required
+
+🇬🇧 UK:
+• 1-year MS (saves money vs 2-year US)
+• Post-Study Work visa: 2 years
+
+Best value: Germany (if you plan early). Best salaries: USA. Best PR: Canada.
+
+Which country are you targeting and what's your field?`},
+  {k:["salary","negotiate","package","lpa","ctc"],r:`Salary negotiation in India — actual tactics:
+
+📊 Research first: Glassdoor, AmbitionBox, Levels.fyi for your role + city
+💡 Always counter-offer: 95% of companies have flexibility — average negotiation wins 15-20% more
+🎯 Script: "I'm very excited about this role. Based on my research and my [skills/experience], could you go to ₹X?"
+
+Key facts:
+• External job offers consistently pay 20-30% more than internal promotions
+• Joining bonus can substitute base salary if company is "unable to move on base"
+• Variable pay, stock options, annual increments — all negotiable
+• Never give your current CTC if asked — share "expected CTC" only
+
+If you have competing offers: Use them. Mention them calmly. It's professional, not aggressive.
+
+What's your current situation — offer in hand, or planning to apply?`},
+];
+
+function getOfflineChatResponse(message){
+  const msg=message.toLowerCase();
+  for(const item of OFFLINE_CHAT){
+    if(item.k.some(k=>msg.includes(k))) return item.r;
+  }
+  return `Great question! Here's my guidance:
+
+As a career counsellor, I can help you with:
+• 📚 JEE/NEET/entrance exam strategy
+• 🎓 College selection (India + Abroad)
+• 💼 Career switching roadmaps
+• 📈 Salary negotiation tactics
+• 🌍 MS/MBA abroad guidance
+• 💡 Stream selection (10th/12th)
+
+Could you tell me more specifically what you need guidance on? For example:
+- "Help me plan for JEE"
+- "I want to switch to data science"
+- "Should I do MBA or MS abroad?"
+- "How to choose between IIT vs NIT vs private college"
+
+The more specific you are, the better I can help! 🙏`;
+}
+
+/* ═══════════════════════
+   CHATBOT
+   ═══════════════════════ */
+function ChatBot(){
+  const [open,setOpen]=useState(false);
+  const [msgs,setMsgs]=useState([
+    {role:"assistant",content:"Namaste! 🙏 I'm Compass, your AI career counsellor.\n\nAsk me anything — stream selection, JEE/NEET strategy, college choices, career switch, FAANG prep, salary negotiation, India vs abroad...\n\nI'm here to give you honest, specific guidance!"}
+  ]);
+  const [inp,setInp]=useState("");
+  const [loading,setLoading]=useState(false);
+  const endRef=useRef();
+  const inpRef=useRef();
+
+  useEffect(()=>{ if(open) setTimeout(()=>endRef.current?.scrollIntoView({behavior:"smooth"}),100); },[msgs,open]);
+
+  const send=async()=>{
+    const t=inp.trim();
+    if(!t||loading) return;
+    const nm=[...msgs,{role:"user",content:t}];
+    setMsgs(nm);
+    setInp("");
+    setLoading(true);
+    try{
+      // Try Gemini first
+      const sys=`You are Compass, a warm, direct, expert AI career counsellor for India. Help students (Class 10/12/UG), parents, and working professionals with career decisions. Be specific, practical, honest. Use Indian context: JEE, NEET, IIT, NIT, BITS, LPA, FAANG, tier colleges, etc. Keep responses concise but genuinely helpful. No fluff.`;
+      const reply=await callGemini(nm,sys,GEMINI_API_KEY);
+      setMsgs(m=>[...m,{role:"assistant",content:reply}]);
+    }catch(e){
+      // Gemini failed — use offline smart responses (never show error)
+      const offlineReply=getOfflineChatResponse(t);
+      setMsgs(m=>[...m,{role:"assistant",content:offlineReply}]);
+    }
+    setLoading(false);
+    setTimeout(()=>inpRef.current?.focus(),100);
+  };
+
+  return(
+    <>
+      {open&&(
+        <div className="chat-panel">
+          <div className="chat-header">
+            <div className="chat-avatar">C</div>
+            <div>
+              <div style={{fontSize:14,fontWeight:600,color:"var(--cream)"}}>Compass AI</div>
+              <div className="chat-status"><div className="chat-status-dot"/>Online — Ready to help</div>
+            </div>
+            <button className="chat-close" onClick={()=>setOpen(false)}>×</button>
+          </div>
+          <div className="chat-messages">
+            {msgs.map((m,i)=>(
+              <div key={i} className={m.role==="user"?"msg-user":"msg-ai"}>{m.content}</div>
+            ))}
+            {loading&&(
+              <div className="chat-thinking">
+                <div className="dot-bounce"/><div className="dot-bounce"/><div className="dot-bounce"/>
+              </div>
+            )}
+            <div ref={endRef}/>
+          </div>
+          <div className="chat-input-row">
+            <input ref={inpRef} className="chat-inp" placeholder="Ask anything about your career..."
+              value={inp} onChange={e=>setInp(e.target.value)}
+              onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send();}}}/>
+            <button className="chat-send" onClick={send} disabled={loading||!inp.trim()}>↑</button>
+          </div>
+        </div>
+      )}
+      <button className="chat-btn" onClick={()=>setOpen(o=>!o)} title="Chat with AI Career Counsellor">
+        {open?"✕":"💬"}
+      </button>
+    </>
+  );
+}
+
+/* ═══════════════════════
+   HOME
+   ═══════════════════════ */
+function Home({setView,onAuthOpen}){
+  return(
+    <>
+      <Hero setView={setView} onAuthOpen={onAuthOpen}/>
+      <Marquee/>
+      <ForWho setView={setView}/>
+      <Features/>
+      <HowItWorks/>
+      <Testimonials/>
+      <CTA setView={setView}/>
+      <Footer setView={setView}/>
+    </>
+  );
+}
+
+/* ═══════════════════════
+   APP ROOT
+   ═══════════════════════ */
+function App(){
+  const [view,setView]=useState("home");
+  const [roadmap,setRoadmap]=useState(null);
+  const [generating,setGenerating]=useState(false);
+  const [savedProfile,setSavedProfile]=useState("");
+  const [user,setUser]=useState(()=>getSession());
+  const [showAuth,setShowAuth]=useState(false);
+
+  useEffect(()=>{ window.scrollTo({top:0,behavior:"smooth"}); },[view]);
+
+  // ── PREMIUM CURSOR + SPOTLIGHT + TRAIL + MAGNETIC ──
+  useEffect(()=>{
+    const cur  = document.getElementById("cur");
+    const ring = document.getElementById("cur-ring");
+    const spot = document.getElementById("spotlight");
+    if(!cur||!ring) return;
+
+    let mx=window.innerWidth/2, my=window.innerHeight/2;
+    let rx=mx, ry=my, sx=mx, sy=my;
+    let lastTrail=0;
+    let afRing, afSpot;
+
+    // ── ring lerp ──
+    const lerpRing=()=>{
+      rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
+      ring.style.left=rx+"px"; ring.style.top=ry+"px";
+      afRing=requestAnimationFrame(lerpRing);
+    };
+
+    // ── spotlight slow lerp ──
+    const lerpSpot=()=>{
+      sx+=(mx-sx)*.05; sy+=(my-sy)*.05;
+      if(spot){ spot.style.left=sx+"px"; spot.style.top=sy+"px"; }
+      afSpot=requestAnimationFrame(lerpSpot);
+    };
+
+    // ── particle trail ──
+    const spawnTrail=(x,y)=>{
+      const d=document.createElement("div");
+      d.className="trail-dot";
+      const sz=Math.random()*5+2;
+      const r=185+Math.random()*40|0, g=140+Math.random()*30|0, b=70+Math.random()*30|0;
+      const dur=(.45+Math.random()*.35).toFixed(2);
+      d.style.cssText=`left:${x}px;top:${y}px;width:${sz}px;height:${sz}px;background:rgba(${r},${g},${b},.7);animation-duration:${dur}s;`;
+      document.body.appendChild(d);
+      setTimeout(()=>d.remove(), 900);
+    };
+
+    // ── click ripple ──
+    const onClick=e=>{
+      document.body.classList.add("cur-click");
+      setTimeout(()=>document.body.classList.remove("cur-click"),150);
+      const rip=document.createElement("div");
+      rip.className="click-ripple";
+      rip.style.left=e.clientX+"px"; rip.style.top=e.clientY+"px";
+      document.body.appendChild(rip);
+      setTimeout(()=>rip.remove(),700);
+    };
+
+    // ── mouse move ──
+    const onMove=e=>{
+      mx=e.clientX; my=e.clientY;
+      cur.style.left=mx+"px"; cur.style.top=my+"px";
+      const now=Date.now();
+      if(now-lastTrail>30){ spawnTrail(mx,my); lastTrail=now; }
+    };
+
+    // ── magnetic effect ──
+    const MAG_SEL=".btn-gold,.btn-outline,.chat-btn,.logo-mark,.nav-link";
+    const magMap=new Map();
+    const addMag=el=>{
+      if(magMap.has(el)) return;
+      const mm=ev=>{
+        const r=el.getBoundingClientRect();
+        const dx=(ev.clientX-r.left-r.width/2)*.25;
+        const dy=(ev.clientY-r.top-r.height/2)*.25;
+        el.style.transform=`translate(${dx}px,${dy}px)`;
+      };
+      const me=()=>document.body.classList.add("cur-hover");
+      const ml=()=>{ el.style.transform=""; document.body.classList.remove("cur-hover"); };
+      el.addEventListener("mousemove",mm);
+      el.addEventListener("mouseenter",me);
+      el.addEventListener("mouseleave",ml);
+      magMap.set(el,{mm,me,ml});
+    };
+    const removeMag=el=>{
+      const h=magMap.get(el);
+      if(!h) return;
+      el.removeEventListener("mousemove",h.mm);
+      el.removeEventListener("mouseenter",h.me);
+      el.removeEventListener("mouseleave",h.ml);
+      magMap.delete(el);
+    };
+
+    // ── generic hover ──
+    const HOVER_SEL="a,button,.who-card,.testi-card,.bento-card,.profile-card,.path-card,.how-card";
+    const hoverSet=new Set();
+    const onEnterG=()=>document.body.classList.add("cur-hover");
+    const onLeaveG=()=>document.body.classList.remove("cur-hover");
+
+    const attachAll=()=>{
+      document.querySelectorAll(HOVER_SEL).forEach(el=>{
+        if(hoverSet.has(el)) return;
+        el.addEventListener("mouseenter",onEnterG);
+        el.addEventListener("mouseleave",onLeaveG);
+        hoverSet.add(el);
+      });
+      document.querySelectorAll(MAG_SEL).forEach(addMag);
+    };
+    attachAll();
+
+    const obs=new MutationObserver(attachAll);
+    obs.observe(document.getElementById("root"),{childList:true,subtree:true});
+
+    document.addEventListener("mousemove",onMove);
+    document.addEventListener("click",onClick);
+    afRing=requestAnimationFrame(lerpRing);
+    afSpot=requestAnimationFrame(lerpSpot);
+
+    return()=>{
+      document.removeEventListener("mousemove",onMove);
+      document.removeEventListener("click",onClick);
+      cancelAnimationFrame(afRing); cancelAnimationFrame(afSpot);
+      obs.disconnect();
+      magMap.forEach((_,el)=>removeMag(el));
+    };
+  },[]);
+
+  const handleGenerate=async(profile,form)=>{
+    setSavedProfile(profile);
+    setRoadmap(null);
+    setGenerating(true);
+    setView("roadmap");
+
+    const PROF=PROFILES.find(p=>p.id===profile);
+    const prompt=`You are an expert Indian career counsellor. Generate a detailed, actionable career roadmap for this person.
+
+Profile Type: ${PROF?.title}
+Name: ${form.name||"User"}
+Current Stage: ${form.stage}
+Goal: ${(ROADMAP_OPTIONS[profile]||[]).find(o=>o.key===form.goal)?.label || form.goal}
+Interests & Strengths: ${form.interests||"Not specified"}
+Target Timeline: ${form.timeline}
+Biggest Challenge: ${form.challenges||"Not mentioned"}
+
+Return ONLY valid JSON — no markdown fences, no extra text, just raw JSON:
+{
+  "headline": "8-word max inspiring headline for their journey",
+  "summary": "2 sentences: first validates their goal, second reveals the key insight about their path",
+  "timeline": "Realistic total timeline e.g. '12-18 months'",
+  "difficulty": "One of: Beginner / Intermediate / Advanced / Highly Competitive",
+  "salaryRange": "Expected outcome in Indian context e.g. 'NIT/BITS tier' or '₹18-24 LPA fresher'",
+  "topSkills": ["Skill 1","Skill 2","Skill 3","Skill 4","Skill 5"],
+  "phases": [
+    {
+      "id": 1,
+      "title": "Phase name",
+      "duration": "X weeks or months",
+      "focus": "One line focus",
+      "actions": ["Specific action 1","Specific action 2","Specific action 3"],
+      "milestone": "Concrete, measurable milestone"
+    }
+  ],
+  "resources": [
+    {"name": "Resource name","type": "Course/Book/Platform/YouTube Channel","free": true}
+  ],
+  "warnings": ["Specific honest pitfall 1","Specific honest pitfall 2","Specific honest pitfall 3"]
+}
+
+Rules:
+- Make 3-5 phases. Be highly specific to this EXACT goal: ${(ROADMAP_OPTIONS[profile]||[]).find(o=>o.key===form.goal)?.label || form.goal}. Do NOT generate roadmap for any other goal.
+- Resources: 4-6 items, mix free and paid
+- Warnings: be honest, not generic
+- Use Indian context (JEE, NEET, LPA, college tiers, etc.) where relevant
+- Return pure JSON only — NO markdown code blocks, NO backticks`;
+
+    let roadmapData=null;
+    // Try Gemini first
+    try{
+      const text=await callGemini([{role:"user",content:prompt}],"",GEMINI_API_KEY);
+      const clean=text.replace(/```json|```/g,"").trim();
+      const start=clean.indexOf("{");
+      const end=clean.lastIndexOf("}");
+      const jsonStr=clean.slice(start,end+1);
+      roadmapData=JSON.parse(jsonStr);
+    }catch(e){
+      // Gemini failed — use offline roadmap (NEVER show error)
+      console.log("Gemini unavailable, using offline roadmap");
+      roadmapData=getOfflineRoadmap(profile,form);
+    }
+
+    // Personalize headline if user provided name
+    if(form.name&&roadmapData&&!roadmapData.headline.includes(form.name)){
+      roadmapData={...roadmapData,headline:roadmapData.headline};
+    }
+
+    setRoadmap(roadmapData);
+    setGenerating(false);
+  };
+
+  const handleLogout=()=>{
+    clearSession();
+    setUser(null);
+  };
+
+  return(
+    <div style={{minHeight:"100vh"}}>
+      {showAuth&&(
+        <AuthModal
+          onClose={()=>setShowAuth(false)}
+          onSuccess={(u)=>{ setUser(u); setShowAuth(false); }}
+        />
+      )}
+      <Nav view={view} setView={setView} user={user} onLogout={handleLogout} onAuthOpen={()=>setShowAuth(true)}/>
+      {view==="home"&&<Home setView={setView} onAuthOpen={()=>setShowAuth(true)}/>}
+      {view==="explore"&&<ExplorePaths/>}
+      {view==="generator"&&<Generator onGenerate={handleGenerate}/>}
+      {view==="roadmap"&&(
+        <RoadmapView
+          roadmap={roadmap}
+          generating={generating}
+          profile={savedProfile}
+          onBack={()=>setView("generator")}
+        />
+      )}
+      <ChatBot/>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
