@@ -2133,10 +2133,10 @@ function App(){
     const spawnTrail=(x,y)=>{
       const d=document.createElement("div");
       d.className="trail-dot";
-      const sz=Math.random()*5+2;
-      const r=185+Math.random()*40|0, g=140+Math.random()*30|0, b=70+Math.random()*30|0;
+      const sz=Math.random()*6+3;
+      const r=220+Math.random()*35|0, g=220+Math.random()*35|0, b=220+Math.random()*35|0;
       const dur=(.45+Math.random()*.35).toFixed(2);
-      d.style.cssText=`left:${x}px;top:${y}px;width:${sz}px;height:${sz}px;background:rgba(${r},${g},${b},.7);animation-duration:${dur}s;`;
+      d.style.cssText=`left:${x}px;top:${y}px;width:${sz}px;height:${sz}px;background:rgba(${r},${g},${b},.9);animation-duration:${dur}s;`;
       document.body.appendChild(d);
       setTimeout(()=>d.remove(), 900);
     };
